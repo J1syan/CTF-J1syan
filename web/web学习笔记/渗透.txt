@@ -1,0 +1,23 @@
+www.tuwenhao.xyz 
+ip：124.223.116.35
+有备案 已授权
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+
+
+
+
+
+https://88933.me/ 
+ip:154.211.6.36
+无备案 色情网站
+
+PORT     STATE SERVICE
+80/tcp   open  http
+443/tcp  open  https
+888/tcp  open  accessbuilder
+8888/tcp open  sun-answerbook
+
+

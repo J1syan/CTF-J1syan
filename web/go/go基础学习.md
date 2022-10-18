@@ -301,6 +301,30 @@ func main() {
 //=> Poisonous: true
 //=> Sound: Meow!!!
 ```
+空接口类型可以接收任意类型数据：
+```go
+package main
+import "fmt"
+func main() {
+    // 1.定义一个空接口类型变量
+    var i interface{}
+    // 2.用接口类型保存任意类型数据
+    i = 123
+    fmt.Println(i) // 123
+    i = 3.14
+    fmt.Println(i) // 3.14
+    i = "lnj"
+    fmt.Println(i) // lnj
+    i = [3]int{1, 3, 5}
+    fmt.Println(i) // [1 3 5]
+    i = []int{2, 4, 6}
+    fmt.Println(i) // [2 4 6]
+    i = map[string]string{"name": "lnj"}
+    fmt.Println(i) // map[name:lnj]
+    i = Computer{"戴尔", "F1234"}
+    fmt.Println(i) // {戴尔 F1234}
+}
+```
 
 
 

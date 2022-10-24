@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://www.cnblogs.com/yZzcXQ/p/JavaSE-anno.html -->
+<html lang="zh-cn" style="--olcb-folder-code-block-max-height:80vh;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin-when-cross-origin">
+    <meta name="description" content="注解 1.概念 注解：说明程序的。给计算机看的 注释：用文字描述程序的。给程序员看的 注解的定义：注解（Annotation），也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一个特性">
+    <meta property="og:description" content="注解 1.概念 注解：说明程序的。给计算机看的 注释：用文字描述程序的。给程序员看的 注解的定义：注解（Annotation），也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一个特性">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Java注解 看这一篇就够了 - yZzc_XQ - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="https://common.cnblogs.com/favicon.svg" type="image/svg+xml">
+    
+    <style>#home :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs), :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs) {background: rgb(245, 245, 245);
+        padding: 12px;
+        border: 1px solid rgb(204, 204, 204);
+        border-radius: 3px;
+        border-color: transparent;
+        color: rgb(68, 68, 68);
+        font-family: "Courier New", sans-serif;
+        font-size: 12px</style><link rel="stylesheet" href="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/blog-common.min.css">
+    
+
+    <link id="MainCss" rel="stylesheet" href="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/bundle-simpleblue.min.css">
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/cnblogs.css">
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/bundle-simpleblue-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/yZzcXQ/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/yZzcXQ/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/yZzcXQ/wlwmanifest.xml">
+    <script>
+        var currentBlogId = 586203;
+        var currentBlogApp = 'yZzcXQ';
+        var isLogined = true;
+        var isBlogOwner = false;
+        var skinName = 'SimpleBlue';
+        var visitorUserId = '91fc3111-2748-43f4-b8f5-08da3b3354ad';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function(){ return ''; } });
+            }
+        } catch(error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+    </script>
+        <script>
+            var currentPostDateAdded = '2020-03-20 10:22';
+        </script>
+    <script src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/blog-common.min.js.下载"></script><style>.medium-zoom-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 300ms;
+  will-change: opacity;
+}
+
+.medium-zoom--opened .medium-zoom-overlay {
+  cursor: pointer;
+  cursor: zoom-out;
+  opacity: 1;
+}
+
+.medium-zoom-image {
+  cursor: pointer;
+  cursor: zoom-in;
+  /*
+    The `transition` is marked as "!important" for the animation to happen
+    even though it's overriden by another inline `transition` style attribute.
+
+    This is problematic with frameworks that generate inline styles on their
+    images (e.g. Gatsby).
+
+    See https://github.com/francoischalifour/medium-zoom/issues/110
+   */
+  transition: transform 300ms cubic-bezier(0.2, 0, 0.2, 1) !important;
+}
+
+.medium-zoom-image--hidden {
+  visibility: hidden;
+}
+
+.medium-zoom-image--opened {
+  position: relative;
+  cursor: pointer;
+  cursor: zoom-out;
+  will-change: transform;
+}
+</style><script id="hljs-script" src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/highlight.min.js.下载" type="text/javascript" async=""></script>
+    
+
+    
+</head>
+<body class="skin-simpleblue has-navbar hljs-engine">
+<a name="top"></a>
+<div id="top_nav" class="navbar forpc">
+    <nav id="nav_main" class="navbar-main">
+        <ul id="nav_left" class="navbar-list navbar-left">
+            <li class="navbar-branding">
+                <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                    <img src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/logo.svg" alt="博客园Logo">
+                </a>
+            </li>
+            <li>
+                <a href="https://www.cnblogs.com/" onclick="countClicks(&#39;skin-navbar-sitehome&#39;)">首页</a>
+            </li>
+            <li>
+                <a href="https://news.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-news&#39;)">新闻</a>
+            </li>
+            <li>
+                <a href="https://q.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-q&#39;)">博问</a>
+            </li>
+            <li>
+                <a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-brands&#39;)">专区</a>
+            </li>
+            <li>
+                <a href="https://ing.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-ing&#39;)">闪存</a>
+            </li>
+            <li>
+                <a href="https://edu.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-edu&#39;)">班级</a>
+            </li>
+        </ul>
+        <ul id="nav_right" class="navbar-list navbar-right">
+            <li>
+                <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                    <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3">
+                    <button type="submit" id="zzk_search_button">
+                        <img src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/search.svg" alt="搜索">
+                    </button>
+                </form>
+            </li>
+            <li id="navbar_login_status" class="navbar-list">
+                <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔" style="display: inline;">
+                    <img id="new_post_icon" class="navbar-icon" src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/newpost.svg" alt="写随笔">
+                </a>
+                <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://www.cnblogs.com/J1syan/" alt="我的博客" title="我的博客" style="display: inline;">
+                    <img id="myblog_icon" class="navbar-icon" src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/myblog.svg" alt="我的博客">
+                </a>
+                <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息" style="display: inline;">
+                    <img id="msg_icon" class="navbar-icon" src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/message.svg" alt="短消息">
+                    <span id="msg_count" style="display: none"></span>
+                </a>
+                <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                    <img class="navbar-icon" src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/lite-mode-on.svg" alt="简洁模式">
+                </a>
+                <div id="user_info" class="navbar-user-info dropdown" style="display: block;">
+                    <a class="dropdown-button" href="https://home.cnblogs.com/u/J1syan">
+                        <img id="user_icon" class="navbar-avatar" src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/20220529010229.png" alt="用户头像">
+                    </a>
+                    <div class="dropdown-menu">
+                        <a id="navblog-myblog-text" href="https://www.cnblogs.com/J1syan/">我的博客</a>
+                        <a href="https://home.cnblogs.com/">我的园子</a>
+                        <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                        <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/lite-mode-check.svg" class="hide" style="display: none;"><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                        <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                    </div>
+                </div>
+                <a class="navbar-anonymous" href="https://account.cnblogs.com/signup" style="display: none;">注册</a>
+                <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()" style="display: none;">登录</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+
+<div id="home">
+    <div id="header">
+        <div id="blogTitle">
+            <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/yZzcXQ/">yZzc_XQ</a>
+</div>
+<div class="subtitle"></div>
+
+        </div>
+        <div id="navigator">
+            
+<ul id="navList">
+    <li id="nav_sitehome"><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+    <li id="nav_myhome">
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/yZzcXQ/">
+首页</a>
+</li>
+    <li id="nav_newpost">
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+    <li id="nav_contact">
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/yZzc_XQ">
+联系</a></li>
+    <li id="nav_rss">
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/yZzcXQ/rss/">订阅</a></li>
+    <li id="nav_admin">
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+            <div class="blogStats">
+                
+<span id="stats_post_count">随笔 - 10&nbsp;</span>
+<span id="stats_article_count">文章 - 0&nbsp;</span>
+<span id="stats_comment_count">评论 - 1&nbsp;</span>
+<span id="stats_total_view_count">阅读 - 
+<span title="总阅读数: 9799">
+9799</span></span>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="mainContent">
+            <div class="forFlow">
+                <div id="post_detail">
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-anno.html">
+    <span role="heading" aria-level="2">Java注解 看这一篇就够了</span>
+    
+</a><button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h1 id="注解">注解<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h1>
+<h2 id="1概念">1.概念<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>注解：说明程序的。给计算机看的</p>
+<p>注释：用文字描述程序的。给程序员看的</p>
+<p>注解的定义：注解（Annotation），也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一个特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明，注释。</p>
+<h2 id="2作用">2.作用<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>①编写文档：通过代码里标识的注解生成文档【生成文档doc文档】：</p>
+<p>​		shift+右键 -&gt; 在此处打开Powershell窗口 -&gt; 输入：javadoc .\类名.java</p>
+<p>②代码分析：通过代码里标识的注解对代码进行分析【使用反射】</p>
+<p>③编译检查：通过代码里标识的注解让编译器能够实现基本的编译检查【Override】</p>
+<h2 id="3java-的三大注解">3.Java 的三大注解<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>1.@Override：表明子类中覆盖了超类中的某个方法,如果写错了覆盖形式,编译器会报错</p>
+<p>2.@deprecated：废弃的（过时的）表明不希望别人在以后使用这个类,方法,变量等.</p>
+<p>3.@suppresswarnings：抑制警告</p>
+<p>​			达到抑制编译器产生警告的目的,但是不很不建议使用,因为后期编码人员看不懂编译器			提示的警告,不能更好的选择更好的类去完成任务。</p>
+<p>​	 		一般传递参数：all   @SuppressWarnings("all")  可以加在类的上面一行，这样代码就			没有警告了，显得比较干净。</p>
+<h2 id="4自定义注解">4.自定义注解：<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>本质：注解本质上就是一个接口，该接口默认继承Annotation接口</p>
+<p>​			public interface MyAnno extends java.lang.annotation.Annotation {}</p>
+<p>​			可以在Powershell窗口反编译看看：</p>
+<p><img src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/1971784-20200320101724210-2029190552.jpg" alt="" loading="lazy" class="medium-zoom-image"></p>
+<p>格式：</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> 注解名称{
+<span class="hljs-comment">/* 属性列表;
+ * 注解中的属性 主要定义抽象方法 不定义常量
+ * 抽象方法的返回值类型有要求():
+ * 		1.基本数据类型
+ * 		2.String
+ * 		3.枚举类型
+ * 		4.注解
+ * 		5.数组(以上几种类型的数组)
+ */</span>
+}
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//属性列表中抽象方法的举例：</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> MyAnno {
+	
+	 <span class="hljs-type">int</span> <span class="hljs-title function_">getName</span><span class="hljs-params">()</span>;
+	  
+	 String <span class="hljs-title function_">getStr</span><span class="hljs-params">()</span>;
+	  
+	 Season <span class="hljs-title function_">getSeason</span><span class="hljs-params">()</span>;   <span class="hljs-comment">//新建Enum枚举类Season</span>
+	  
+	 MyAnno2 <span class="hljs-title function_">getMyAnno2</span><span class="hljs-params">()</span>;	<span class="hljs-comment">//新建Annotation注解类MyAnno2</span>
+	
+	String[] value();
+	
+	<span class="hljs-comment">//int getName() default 0;  //如果不想为注解中的某个属性赋值,可以为其定义默认值</span>
+
+}
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//枚举类</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">Season</span> {
+	SPRING,SUMMER,AUTUMN,WINtER
+}
+</code></pre>
+<p>注解类定义了属性，那么在使用时必须给属性赋值。</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">/*
+1. 如果定义属性时，使用default关键字给属性默认初始化值，则使用注解时，可以不进行属性的赋值。int getName() default 0;
+	@MyAnno()
+	public static void  test02() {}
+2. 如果只有一个属性需要赋值，并且属性的名称是value，则value可以省略，直接定义值即可。
+
+3. 数组赋值时，值使用{}包裹。如果数组中只有一个值，则{}可以省略。
+*/</span>
+<span class="hljs-comment">//对我们自定义的MyAnno注解类的使用：</span>
+<span class="hljs-meta">@MyAnno(getName = 1, getStr = "100", getSeason = Season.SPRING, getMyAnno2= @MyAnno2,value = {"1","2"})</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span>  <span class="hljs-title function_">test01</span><span class="hljs-params">()</span> {}
+</code></pre>
+<p>元注解：用于描述注解的注解（注解前面的注解）</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-meta">@Target</span>：描述注解能够作用的位置
+	ElementType取值：
+		TYPE：可以作用于类上
+         FIELD：可以作用于成员变量上
+		METHOD：可以作用于方法上
+<span class="hljs-meta">@Retention</span>：描述注解被保留的阶段
+	SOURCE:	源代码阶段, 被编译器忽略
+	CLASS:  注解将会被保留在Class文件中，但在运行时并不会被VM保留。这是默认行为，所有没			有用Retention注解的注解，都会采用这种策略。
+	RUNTIME:保留至运行时。所以我们可以通过反射去获取注解信息。
+	<span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span>：当前被描述的注解，会保留到class字节码文件中，并被JVM读取到
+<span class="hljs-comment">//下面两个了解</span>
+<span class="hljs-meta">@Documented</span>：描述注解是否被抽取到api文档中
+<span class="hljs-meta">@Inherited</span>：描述注解是否被子类继承
+</code></pre>
+<p>对Java的三大注解之一的SuppressWarnings注解进行分析：</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-meta">@Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE})</span>
+<span class="hljs-meta">@Retention(RetentionPolicy.SOURCE)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> SuppressWarnings {
+    String[] value();      <span class="hljs-comment">//只有一个属性，且名称为value，且为数组赋值</span>
+}
+<span class="hljs-meta">@SuppressWarnings(value={"all"})</span>	
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AnnoTest</span> {}
+<span class="hljs-comment">//同样可以这么使用</span>
+<span class="hljs-meta">@SuppressWarnings({"all"})</span>	<span class="hljs-comment">//使用时可以省略value</span>
+<span class="hljs-meta">@SuppressWarnings("all")</span>	<span class="hljs-comment">//使用时可以省略{}</span>
+</code></pre>
+<h2 id="5注解的使用">5.注解的使用<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>注解的作用:将我们为注解中的属性(抽象方法)赋的值提取出来,在类中使用</p>
+<ol>
+<li>
+<p>获取注解定义的位置的对象  （Class，Field，Method）</p>
+</li>
+<li>
+<p>获取指定的注解：</p>
+<p>getAnnotation(Class annotationClass)：方法返回该元素的指定类型的注释，如果是这样的注释，否则返回null</p>
+<p>​		参数：annotationClass -- 对应于注释类型的Class对象。</p>
+</li>
+</ol>
+<h2 id="6案例">6.案例<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>1.定义该类使用注解加反射，实现不修改任何代码(只需要修改注解中的值),就可以实现调用任意类中的任意方法</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//自定义注解类</span>
+<span class="hljs-meta">@Retention(RUNTIME)</span>
+<span class="hljs-meta">@Target(TYPE)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> Pro {
+	
+	String <span class="hljs-title function_">className</span><span class="hljs-params">()</span>;   <span class="hljs-comment">//通过该属性获取到类名</span>
+	String <span class="hljs-title function_">methodName</span><span class="hljs-params">()</span>;   <span class="hljs-comment">//通过该属性获取到方法名</span>
+
+}
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-meta">@SuppressWarnings("all")</span>
+<span class="hljs-meta">@Pro(className = "com.huike.b.useanno.Demo2", methodName = "show")</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AnnoTest</span> {
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception {
+		
+		<span class="hljs-comment">//1.解析注解</span>
+		<span class="hljs-comment">//1.1:获取加注解的类的字节码文件对象</span>
+		<span class="hljs-comment">//1.2:获取注解对象</span>
+		<span class="hljs-type">Class</span> <span class="hljs-variable">cls</span> <span class="hljs-operator">=</span> AnnoTest.class;
+		
+		<span class="hljs-comment">//通过当前类的Class对象获取到类上的注解对象</span>
+		<span class="hljs-type">Pro</span> <span class="hljs-variable">pro</span> <span class="hljs-operator">=</span> (Pro) cls.getAnnotation(Pro.class);
+		
+		
+		<span class="hljs-comment">//2.调用注解中的抽象方法  获取到返回值</span>
+		<span class="hljs-type">String</span> <span class="hljs-variable">className</span> <span class="hljs-operator">=</span> pro.className();
+		<span class="hljs-type">String</span> <span class="hljs-variable">methodName</span> <span class="hljs-operator">=</span> pro.methodName();
+		
+		<span class="hljs-comment">//3.获取到返回值所对应的类的Class对象</span>
+		<span class="hljs-type">Class</span> <span class="hljs-variable">cls1</span> <span class="hljs-operator">=</span> Class.forName(className);	
+		
+		<span class="hljs-comment">//4.创建该类的对象</span>
+		<span class="hljs-type">Object</span> <span class="hljs-variable">object</span> <span class="hljs-operator">=</span> cls1.newInstance();
+		
+		<span class="hljs-comment">//5.获取到该类的特定方法对象</span>
+		<span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> cls1.getMethod(methodName);
+		
+		<span class="hljs-comment">//6.执行方法</span>
+		method.invoke(object);
+		
+	}
+}
+</code></pre>
+<p>2.测试框架:</p>
+<ul>
+<li>
+<pre class="highlighter-hljs" highlighted="true"><code class="highlighter-hljs hljs language-css"> 当<span class="hljs-selector-tag">main</span>方法执行后,会自动执行被检测的所有方法(被加了Check注解的方法),判断方法内是否有异常
+</code></pre>
+</li>
+<li>
+<pre class="highlighter-hljs" highlighted="true"><code class="highlighter-hljs hljs language-undefined"> 如果没有就算了,如果有异常,会自动记录到特定的文件中,文件中记录哪些方法出异常了,异常的名称是什么异常的原因是什么   
+</code></pre>
+</li>
+<li>
+<pre class="highlighter-hljs" highlighted="true"><code class="highlighter-hljs hljs language-undefined"> 得出总结:本次共测试了多少方法，出现了多少次异常
+</code></pre>
+</li>
+</ul>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//Check注解：</span>
+<span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span>
+<span class="hljs-meta">@Target(ElementType.METHOD)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> Check {
+}
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//自定义Calculator类，被用于测试</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Calculator</span> {
+	
+	<span class="hljs-comment">//加法</span>
+	<span class="hljs-meta">@Check</span>
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">()</span> {
+		<span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;
+		str.toString();
+		System.out.println(<span class="hljs-string">"1 + 0="</span>+(<span class="hljs-number">1</span> + <span class="hljs-number">0</span>));
+	}
+	
+	<span class="hljs-comment">//减法</span>
+	<span class="hljs-meta">@Check</span>
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sub</span><span class="hljs-params">()</span> {
+		System.out.println(<span class="hljs-string">"1 - 0="</span>+(<span class="hljs-number">1</span> - <span class="hljs-number">0</span>));
+	}
+	
+	<span class="hljs-comment">//乘法</span>
+	<span class="hljs-meta">@Check</span>
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">mul</span><span class="hljs-params">()</span> {
+		System.out.println(<span class="hljs-string">"1 * 0="</span>+(<span class="hljs-number">1</span> * <span class="hljs-number">0</span>));
+	}
+	
+	<span class="hljs-comment">//除法</span>
+	<span class="hljs-meta">@Check</span>
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">div</span><span class="hljs-params">()</span> {
+		System.out.println(<span class="hljs-string">"1 / 0="</span>+(<span class="hljs-number">1</span> / <span class="hljs-number">0</span>));
+	}
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">show</span><span class="hljs-params">()</span> {
+		System.out.println(<span class="hljs-string">"永无bug..."</span>);
+	}
+	
+}
+
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//测试类</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CheckDemo</span> {
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception{
+		
+		<span class="hljs-comment">//1.创建计算器对象 得到对应的Class对象</span>
+		<span class="hljs-type">Calculator</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Calculator</span>();
+		<span class="hljs-type">Class</span> <span class="hljs-variable">cls</span> <span class="hljs-operator">=</span> c.getClass();
+		<span class="hljs-comment">//2.获取到该对象中的所有的方法</span>
+		Method[] methods = cls.getDeclaredMethods();
+		
+		<span class="hljs-type">int</span> <span class="hljs-variable">num01</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;  <span class="hljs-comment">//定义一个int类型的值用于记录出现的异常次数</span>
+		<span class="hljs-type">int</span> <span class="hljs-variable">num02</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;  <span class="hljs-comment">//定义一个int类型的值用于记录带有Check注解的方法数</span>
+		<span class="hljs-type">BufferedWriter</span> <span class="hljs-variable">bw</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedWriter</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileWriter</span>(<span class="hljs-string">"bug.txt"</span>));
+		
+		<span class="hljs-comment">//3.判断哪些方法上有Check注解</span>
+		<span class="hljs-keyword">for</span> (Method method : methods) {
+			
+			<span class="hljs-comment">//该方法用于判断 方法上是否有特定的注解</span>
+			<span class="hljs-comment">//4.如果有Check注解,执行该方法 如果该方法无任何异常,就算了</span>
+			<span class="hljs-keyword">if</span> (method.isAnnotationPresent(Check.class)) {
+				num02++;
+				<span class="hljs-keyword">try</span> {
+					method.invoke(c);   <span class="hljs-comment">//如果有注解,则执行该方法</span>
+				} <span class="hljs-keyword">catch</span> (Exception e) {
+					num01++;
+					<span class="hljs-comment">//5.如果有异常,记录异常信息,并通过IO流打印到文件中</span>
+					<span class="hljs-comment">//如果方法存在异常 需要在此通过IO流捕获</span>
+					bw.write(method.getName()+<span class="hljs-string">" 方法出异常了..."</span>);
+					bw.newLine();
+					<span class="hljs-comment">//获取到异常的简短名称</span>
+					bw.write(<span class="hljs-string">"异常的名称为:"</span>+ e.getCause().getClass().getSimpleName());
+					bw.newLine();
+					bw.write(<span class="hljs-string">"异常的原因是:"</span>+ e.getCause().getMessage());
+					bw.newLine();
+					bw.write(<span class="hljs-string">"------------------------------------------------"</span>);
+					bw.newLine();
+				}
+				
+			}
+		}
+		
+		bw.write(<span class="hljs-string">"本次测试结束了,一共测试了"</span>+num02+<span class="hljs-string">"个方法,共出现了"</span>+num01+<span class="hljs-string">"次异常!"</span>);
+		bw.flush();
+		bw.close();
+		
+	}
+}
+</code></pre>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/yZzcXQ/category/1674129.html" target="_blank">JavaSE</a></div>
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/JavaSE/">JavaSE</a>,             <a href="https://www.cnblogs.com/yZzcXQ/tag/Java/">Java</a>,             <a href="https://www.cnblogs.com/yZzcXQ/tag/%E5%8F%8D%E5%B0%84/">反射</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(12530011,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;f6a797ee-120e-46a6-ff9b-08d7c7fac060&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/yZzcXQ/" target="_blank"><img src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/20200314175119.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/yZzcXQ/">yZzc_XQ</a><br>
+            <a href="https://home.cnblogs.com/u/yZzcXQ/followers/">粉丝 - <span class="follower-count">1</span></a>
+            <a href="https://home.cnblogs.com/u/yZzcXQ/followees/">关注 - <span class="following-count">0</span></a><br>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow" class="follow-tip">
+                <a href="javascript:void(0);" onclick="follow(&#39;f6a797ee-120e-46a6-ff9b-08d7c7fac060&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(12530011,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(12530011,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-thread.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-thread.html" data-featured-image="" title="发布于 2020-03-18 21:56">Java多线程的wait()，notify()，notifyAll()、sleep()和yield()方法使用详解</a>
+    <br>
+    <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-InnclassFinal.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-InnclassFinal.html" data-featured-image="" title="发布于 2020-03-22 12:06">为什么内部类只能访问finally修饰的外部局部变量</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2020-03-20 10:22</span>&nbsp;
+<a href="https://www.cnblogs.com/yZzcXQ/">yZzc_XQ</a>&nbsp;
+阅读(<span id="post_view_count">650</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=12530011" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(12530011);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: &#39;91fc3111-2748-43f4-b8f5-08da3b3354ad&#39;, targetType: &#39;blogPost&#39;, targetId: &#39;12530011&#39;, targetLink: &#39;https://www.cnblogs.com/yZzcXQ/p/JavaSE-anno.html&#39;, title: &#39;Java注解 看这一篇就够了&#39; })">举报</a></div>
+        </div>
+        
+<script>
+    var cb_entryId = 12530011, cb_entryCreatedDate = '2020-03-20 10:22', cb_postType = 1, cb_postTitle = 'Java注解 看这一篇就够了';
+    var allowComments = true, cb_blogId = 586203, cb_blogApp = 'yZzcXQ', cb_blogUserGuid = 'f6a797ee-120e-46a6-ff9b-08d7c7fac060';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+        <a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-anno.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-anno.html#top">返回顶部</a></div>
+    <div id="comment_form_container" style="visibility: visible;"><script type="text/javascript" src="./Java注解 看这一篇就够了 - yZzc_XQ - 博客园_files/mention.min.js.下载"></script>
+<div id="commentform_title">发表评论</div>
+<span id="tip_comment" style="color:Red"></span>
+<div class="commentbox_main comment_textarea">
+    <div class="commentbox_title">
+        <div class="commentbox_title_left">
+            <span id="btn_edit_comment" class="commentbox_tab active" title="编辑评论">编辑</span>
+            <span id="btn_preview_comment" class="commentbox_tab" title="Markdown 预览">预览</span>
+        </div>
+        <div class="commentbox_title_right">
+            <span id="ubb_bold" class="comment_icon" alt="粗体" title="添加粗体(Ctrl + B)">
+                <svg class="comment_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g fill-rule="evenodd">
+                        <path d="m13.221 19c1.4414 0 2.5793-0.27451 3.3759-0.82353 0.92931-0.66667 1.4034-1.7059 1.4034-3.1176 0-0.94118-0.22759-1.7059-0.66379-2.2549-0.45517-0.56863-1.119-0.94118-2.0103-1.1176 0.68276-0.27451 1.1948-0.64706 1.5552-1.1569 0.36034-0.54902 0.55-1.2157 0.55-2 0-1.0588-0.36034-1.902-1.0621-2.5294-0.75862-0.66667-1.8207-1-3.1672-1h-6.2017v14h6.2207zm-0.82196-8h-3.3987v-4h3.4367c0.91139 0 1.557 0.15686 1.9747 0.47059 0.37975 0.29412 0.58861 0.78431 0.58861 1.451 0 0.72549-0.20886 1.2549-0.58861 1.5882-0.39873 0.31373-1.0633 0.4902-2.0127 0.4902zm0.52612 6h-3.9249v-4h3.9855c1.052 0 1.8208 0.16216 2.3064 0.48649 0.46532 0.32432 0.70809 0.84685 0.70809 1.5856 0 0.72072-0.3237 1.2252-0.9711 1.5495-0.50578 0.25225-1.2139 0.37838-2.104 0.37838z" fill-rule="nonzero" stroke-width=".35"></path>
+                    </g>
+                </svg>
+            </span>
+            <span id="ubb_url" class="comment_icon" title="添加链接(Ctrl + K)" alt="链接">
+                <svg class="comment_svg comment_svg_stroke" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g fill-rule="evenodd">
+                        <g transform="translate(4 4)" fill-rule="nonzero" stroke-width=".4">
+                            <path d="m6.304 9.696c-0.288-0.288-0.512-0.608-0.704-0.992-0.16-0.32-0.032-0.704 0.288-0.864 0.32-0.16 0.704-0.032 0.864 0.288 0.128 0.224 0.256 0.448 0.448 0.64 0.928 0.928 2.432 0.928 3.36 0l3.36-3.328c0.928-0.928 0.928-2.432 0-3.36s-2.432-0.928-3.36 0l-2.272 2.272c-0.256 0.256-0.64 0.256-0.896 0-0.256-0.256-0.256-0.64 0-0.896l2.272-2.272c1.44-1.44 3.744-1.44 5.184 0 1.44 1.44 1.44 3.744 0 5.184l-3.36 3.296c-0.704 0.704-1.632 1.088-2.592 1.088-0.928 0-1.856-0.352-2.592-1.056z"></path>
+                            <path d="m3.776 15.808c-0.992 0-1.888-0.384-2.592-1.056-1.44-1.44-1.44-3.744 0-5.184l3.328-3.328c1.44-1.44 3.744-1.44 5.184 0 0.288 0.288 0.544 0.64 0.736 1.024 0.16 0.32 0 0.704-0.32 0.864-0.32 0.16-0.704 0-0.864-0.32-0.128-0.256-0.288-0.48-0.48-0.672-0.928-0.928-2.432-0.928-3.36 0l-3.296 3.328c-0.928 0.928-0.928 2.432 0 3.36 0.448 0.448 1.056 0.704 1.664 0.704 0.608 0 1.248-0.256 1.664-0.704l2.112-2.112c0.256-0.256 0.64-0.256 0.896 0s0.256 0.64 0 0.896l-2.112 2.112c-0.672 0.704-1.568 1.088-2.56 1.088z"></path>
+                        </g>
+                    </g>
+                </svg>
+            </span>
+            <span id="ubb_code" class="comment_icon" title="添加代码(Ctrl + `)" alt="代码">
+                <svg class="comment_svg comment_svg_stroke" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g fill-rule="evenodd">
+                        <g transform="translate(16 6)" stroke-linecap="round" stroke-width="2">
+                            <line x1=".5" x2="4.5" y1=".7" y2="6.3"></line>
+                            <line transform="translate(2.5 9.1) scale(1 -1) translate(-2.5 -9.1)" x1=".5" x2="4.5" y1="6.3" y2="11.9"></line>
+                        </g>
+                        <g transform="translate(3 6.1)" stroke-linecap="round" stroke-width="2">
+                            <line transform="translate(2.5 3.5) scale(-1 1) translate(-2.5 -3.5)" x1=".5" x2="4.5" y1=".7" y2="6.3"></line>
+                            <line transform="translate(2.5 9.1) scale(-1) translate(-2.5 -9.1)" x1=".5" x2="4.5" y1="6.3" y2="11.9"></line>
+                        </g>
+                        <path transform="translate(12 12.5) scale(1 -1) translate(-12 -12.5)" d="m10.778 7.1249c0.50008-0.11366 0.9978 0.16911 1.1643 0.64128l0.032406 0.11223 2 8.8c0.1224 0.53855-0.21496 1.0744-0.75351 1.1968-0.50008 0.11366-0.9978-0.16911-1.1643-0.64128l-0.032406-0.11223-2-8.8c-0.1224-0.53855 0.21496-1.0744 0.75351-1.1968z" fill-rule="nonzero" stroke-width=".25"></path>
+                    </g>
+                </svg>
+            </span>
+            <span id="ubb_quote" class="comment_icon" title="添加引用(Ctrl + Q)" alt="引用">
+                <svg class="comment_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g fill-rule="evenodd">
+                        <g transform="translate(5 4)" fill-rule="nonzero" stroke-width=".25">
+                            <path d="m5.0013 15v-5.2702h-2.8008c-0.13413-3.3762 1.2004-6.2143 4.0009-8.5135l-1.2-1.2163c-3.335 2.2996-5.0013 5.8119-5.0013 10.54v4.4595h5.0013-1.285e-5zm8.7987 0v-5.2702h-2.8008c-0.13453-3.3762 1.2-6.2143 4.0009-8.5135l-1.2-1.2163c-3.335 2.2996-5.0013 5.8119-5.0013 10.54v4.4595h5.0013-1.28e-5z"></path>
+                        </g>
+                    </g>
+                </svg>
+            </span>
+            <span id="ubb_img" class="comment_icon" alt="图片" title="上传图片(Ctrl + I)">
+                <svg class="comment_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g fill-rule="evenodd">
+                        <g transform="translate(3 3.8)" fill-rule="nonzero">
+                            <path d="m14.1 0.58235h-11.2c-1.32 0-2.4 1.0482-2.4 2.3294v10.871c0 1.2812 1.08 2.3294 2.4 2.3294h11.2c1.32 0 2.4-1.0482 2.4-2.3294v-10.871c0-1.2812-1.08-2.3294-2.4-2.3294zm0.7 13.569-3.63-3.4165 1.33-1.2909c0.21-0.20382 0.59-0.20382 0.8 0l1.6 1.5529v2.7856c0 0.13588-0.04 0.26206-0.1 0.36882zm-11.9-12.016h11.2c0.44 0 0.8 0.34941 0.8 0.77647v5.8915l-0.47-0.45618c-0.84-0.825-2.22-0.825-3.07 0l-1.35 1.3103-2.39-2.2421c-0.85-0.825-2.22-0.825-3.05-0.019412l-2.48 2.2615v-6.7456c0.01-0.42706 0.37-0.77647 0.81-0.77647zm-0.8 11.647v-1.9897l3.6-3.2806c0.21-0.20382 0.58-0.21353 0.81 0.0097059l6.43 6.0371h-10.04c-0.44 0-0.8-0.33971-0.8-0.77647z"></path>
+                            <ellipse cx="10.5" cy="6.4059" rx="1" ry="1"></ellipse>
+                        </g>
+                    </g>
+                </svg>
+            </span>
+        </div>
+    </div>
+    <div style="display:none">
+        <span id="comment_edit_id"></span>
+        <span id="span_parentcomment_id"></span>
+        <span id="span_parent_id"></span>
+        <span id="span_comment_replyto"></span>
+        <span id="span_comment_posted"></span>
+        <span id="span_current_user_id">91fc3111-2748-43f4-b8f5-08da3b3354ad</span>
+    </div>
+    <textarea id="tbCommentBody" placeholder="支持 Markdown"></textarea>
+    <div id="tbCommentBodyPreview" class="feedbackCon" style="display: none">
+        <div id="tbCommentBodyPreviewBody" class="blog_comment_body comment_preview cnblogs-markdown"></div>
+    </div>
+    <div class="commentbox_footer">
+        <span>&nbsp;</span>
+        <span href="javascript:void(0)" id="ubb_auto_completion" class="comment_option">
+            <svg style="display: none" id="comment_auto_completion_on" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M406.724 908.504c-89.02 0-157.885-32.319-206.594-96.957-49.549-64.639-73.903-155.795-73.903-274.299 0-116.017 24.354-206.345 73.903-270.155 48.71-63.81 117.574-95.3 206.594-95.3h19.316l-7.559 72.925h-3.359c-65.505 0-115.054 25.69-150.326 77.069-35.272 50.55-52.908 122.647-52.908 215.461 0 94.472 17.636 168.226 52.908 220.434 35.272 51.379 84.82 77.897 150.326 77.897h3.36l7.558 72.925h-19.316zm266.548 0c89.02 0 157.885-32.319 206.594-96.957 49.55-64.639 73.904-155.795 73.904-274.299 0-116.017-24.355-206.345-73.904-270.155-48.709-63.81-117.573-95.3-206.594-95.3h-19.315l7.558 72.925h3.36c65.505 0 115.054 25.69 150.326 77.069 35.272 50.55 52.908 122.647 52.908 215.461 0 94.472-17.636 168.226-52.908 220.434-35.272 51.379-84.821 77.897-150.327 77.897h-3.359l-7.558 72.925h19.315zm-94.068-65.897c0 31.514.854 54.433 1.708 68.758 1.709 14.325 3.417 25.784 6.835 34.38 2.563 8.594 6.834 14.324 12.814 20.054 5.126 5.73 14.523 11.46 27.337 17.189v34.38H451.914v-34.38c17.086-7.162 29.046-15.757 35.026-24.352 5.126-10.027 9.398-22.92 11.106-38.676 1.709-17.19 2.563-42.974 2.563-77.353V238.109c0-32.947-.854-55.866-1.709-71.623-1.708-14.325-4.271-25.784-6.834-32.947-3.417-8.595-7.689-15.757-12.814-20.054-5.126-5.73-14.523-10.027-27.338-17.19V61.916h175.984v34.38c-11.96 5.73-21.357 11.459-26.483 15.756-5.125 5.73-9.397 11.46-12.814 20.055-3.417 7.162-5.98 18.622-6.834 34.379-1.709 15.757-2.563 38.676-2.563 71.623v604.498z" fill-rule="nonzero"></path></svg>
+            <svg id="comment_auto_completion_off" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M242.96 223.172l59.627 58.009c-14.277 10.773-26.874 24.032-37.791 40.606-35.272 50.55-52.908 122.647-52.908 215.461 0 94.472 17.636 168.226 52.908 220.434 35.272 51.379 84.82 77.897 150.326 77.897h3.36l7.558 72.925h-19.316c-89.02 0-157.885-32.319-206.594-96.957-49.549-64.639-73.903-155.795-73.903-274.299 0-116.017 24.354-206.345 73.903-270.155 12.597-16.574 26.874-31.49 42.83-43.921zm36.952-23.204c36.112-19.06 78.943-28.175 126.812-28.175h19.316l-7.559 72.925h-3.359c-27.714 0-52.908 4.144-74.743 14.088l-60.467-58.838zM805.123 770.94l60.466 58.01c-47.869 53.036-111.695 79.554-192.317 79.554h-19.315l7.558-72.925h3.36c59.626 0 105.816-21.546 140.248-64.638zm23.515-37.29c26.034-49.723 39.47-115.19 39.47-196.402 0-92.814-17.635-164.91-52.907-215.461-35.272-51.38-84.821-77.069-150.327-77.069h-3.359l-7.558-72.925h19.315c89.02 0 157.885 31.49 206.594 95.3 49.55 63.81 73.904 154.138 73.904 270.155 0 108.56-20.996 194.744-62.146 257.725l-62.986-61.324zM500.609 474.465l78.595 75.92v292.222c0 31.514.854 54.433 1.708 68.758 1.709 14.325 3.417 25.784 6.835 34.38 2.563 8.594 6.834 14.324 12.814 20.054 5.126 5.73 14.523 11.46 27.337 17.189v34.38H451.914v-34.38c17.086-7.162 29.046-15.757 35.026-24.352 5.126-10.027 9.398-22.92 11.106-38.676 1.709-17.19 2.563-42.974 2.563-77.353V474.465zm0-60.164V238.11c0-32.947-.854-55.866-1.709-71.623-1.708-14.325-4.271-25.784-6.834-32.947-3.417-8.595-7.689-15.757-12.814-20.054-5.126-5.73-14.523-10.027-27.338-17.19v-34.38h175.984v34.38c-11.96 5.73-21.357 11.459-26.483 15.756-5.125 5.73-9.397 11.46-12.814 20.055-3.417 7.162-5.98 18.622-6.834 34.379-1.709 15.757-2.563 38.676-2.563 71.623v253.545l-78.595-77.353z"></path><path d="M153.103 132.024l805.45 783.706-44.277 45.505-805.45-783.706z"></path></svg>
+            <span class="inline_middle">自动补全</span>
+        </span>
+    </div>
+</div>
+<p id="commentbox_opt">
+    <input id="btn_comment_submit" type="button" class="comment_btn" title="提交评论(Ctrl + Enter)" value="提交评论">
+    <span id="span_comment_canceledit" style="display:none"><a href="javascript:void(0);" onclick="return CancelCommentEdit()">不改了</a></span>
+    <a href="javascript:void(0);" onclick="return account.logout();">退出</a>
+            <a id="commentbox_opt_sub" href="javascript:void(0);" title="订阅后有新评论时会邮件通知您" onclick="commentManager.Subscribe()">订阅评论</a>
+            <a href="https://www.cnblogs.com/J1syan/" target="_blank">我的博客</a>
+</p>
+<div id="tip_comment2" style="color:Red"></div>
+<p>[Ctrl+Enter快捷键提交]</p>
+<script>var commentEditor = initCommentEditor("tbCommentBody");</script>
+
+</div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"><a href="https://curl.qcloud.com/k19RDMHo" target="_blank" onclick="gtag(&#39;event&#39;, &#39;click&#39;, {&#39;event_category&#39;: &#39;ad&#39;, &#39;event_label&#39;: &#39;T2-腾讯云&#39;})">【推荐】腾讯云多款云产品1折起，买云服务器送免费机器</a><br><a href="https://click.ctyun.cn/?track=source_bokeyuan-medium_cps-content_se430382" target="_blank" onclick="gtag(&#39;event&#39;, &#39;click&#39;, {&#39;event_category&#39;: &#39;ad&#39;, &#39;event_label&#39;: &#39;T2-天翼云&#39;})">【推荐】天翼云新客特惠，云主机1核2G低至33.43元/年</a><br></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card" style="display: none;">
+            <div id="div-gpt-ad-1592365906576-0" style="width: 300px; height: 250px;"></div>
+    </div>
+    <div id="under_post_card1"><div class="under-post-card">
+<b>编辑推荐：</b>
+<br>
+
+· <a href="https://www.cnblogs.com/sheng-jie/p/MassTransit-NET-Distributed-Application-Framework.html" target="_blank">MassTransit | .NET 分布式应用框架</a>
+    <br>
+· <a href="https://www.cnblogs.com/god23bin/p/check-duplication-in-java.html" target="_blank">查重原来是这样实现的啊！</a>
+    <br>
+· <a href="https://www.cnblogs.com/Finley/p/16812713.html" target="_blank">从小白到架构师(2): 走向微服务</a>
+    <br>
+· <a href="https://www.cnblogs.com/coco1s/p/16808899.html" target="_blank">超强的苹果官网滚动文字特效实现</a>
+    <br>
+· <a href="https://www.cnblogs.com/lindexi/p/16804899.html" target="_blank">dotnet 用 SourceGenerator 源代码生成技术实现中文编程语言</a>
+    <br>
+</div></div>
+    <div id="under_post_card2"><div class="itnews under-post-card">
+    <b>最新新闻</b>：
+    <br>
+ ·          <a href="https://news.cnblogs.com/n/730310/" target="_blank">NASA 为阿尔忒弥斯登月任务再购 3 个猎户座飞船，标价19.9亿美元</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/730309/" target="_blank">富士康大动作：杀入私募亲自做GP，曾拿百亿元搞投资</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/730308/" target="_blank">虚拟主播和游戏引擎，成了当代天气预报的财富密码</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/730307/" target="_blank">房多多收到纳斯达克通知：不符合上市最低市值要求</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/730306/" target="_blank">圆心科技再度冲刺港股：8个月亏5.3亿 腾讯红杉启明是股东</a>
+        <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+    </div>
+</div>
+            </div>
+        </div>
+
+        <div id="sideBar">
+            <div id="sideBarMain">
+                <div id="sidebar_news" class="newsItem">
+<h3 class="catListTitle">公告</h3>
+
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/yZzcXQ/">
+            yZzc_XQ
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/yZzcXQ/" title="入园时间：2020-03-14">
+            2年7个月
+        </a>
+        <br>
+        粉丝：
+        <a class="follower-count" href="https://home.cnblogs.com/u/yZzcXQ/followers/">
+            1
+        </a>
+        <br>
+        关注：
+        <a class="folowing-count" href="https://home.cnblogs.com/u/yZzcXQ/followees/">
+            0
+        </a>
+        <div id="p_b_follow" class="follow-tip">
+<a href="javascript:void(0)" onclick="follow(&#39;f6a797ee-120e-46a6-ff9b-08d7c7fac060&#39;)">+加关注</a></div>
+        <script>getFollowStatus('f6a797ee-120e-46a6-ff9b-08d7c7fac060');</script>
+    </div>
+</div></div>
+<div id="sidebar_c3"></div>
+                <div id="calendar"><div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2022/09/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2022年10月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2022/11/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    <tr>
+        <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+        <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+        <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+        <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+        <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+        <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+        <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+    </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">25</td>
+                            <td class="CalOtherMonthDay" align="center">26</td>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                    <td class="CalWeekendDay" align="center">
+                        1
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            2
+                        </td>
+                            <td class="" align="center">
+                                3
+                            </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                7
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            8
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            15
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                20
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            22
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                            <td class="CalTodayDay" align="center">
+                                24
+                            </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            29
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                            <td class="" align="center">
+                                31
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            5
+                        </td>
+                </tr>
+    </tbody>
+</table></div></div>                
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="leftcontentcontainer">
+                    <!-- begin:SingleColumn -->
+                    <div id="blog-sidecolumn"><!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+    <li><a href="https://www.cnblogs.com/yZzcXQ/p/" title="我的博客的随笔列表">我的随笔</a></li>
+<li><a href="https://www.cnblogs.com/yZzcXQ/MyComments.html" title="我的发表过的评论列表">我的评论</a></li>
+<li><a href="https://www.cnblogs.com/yZzcXQ/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li>
+<li><a href="https://www.cnblogs.com/yZzcXQ/comments" title="我的博客的评论列表">最新评论</a></li>
+<li><a href="https://www.cnblogs.com/yZzcXQ/tag/" title="我的博客的标签列表">我的标签</a></li>
+
+</ul>
+</div>
+
+<!-- 最新随笔 -->
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+    <h3 class="catListTitle">我的标签</h3>
+    <ul>
+                <li>
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/Java/">Java<span class="tag-count">(8)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/JavaSE/">JavaSE<span class="tag-count">(5)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/%E5%8F%8D%E5%B0%84/">反射<span class="tag-count">(2)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象<span class="tag-count">(2)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程<span class="tag-count">(1)</span></a>
+        </li>
+    
+
+    </ul>
+</div>
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+
+    <div class="catListPostCategory">
+        <h3 class="catListTitle">
+            
+    <a class="sidebar-card-title-a" href="https://www.cnblogs.com/yZzcXQ/categories">随笔分类</a>
+
+
+
+        </h3>
+        <ul>
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/yZzcXQ/category/1674129.html" class="category-item-link" rel="" target="">JavaSE(7)</a>
+
+                    
+                </li>
+                                        
+        </ul>
+    </div>    <div class="catListPostArchive">
+        <h3 class="catListTitle">
+            
+随笔档案
+
+
+        </h3>
+        <ul>
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/yZzcXQ/archive/2020/03.html" class="category-item-link" rel="" target="">2020年3月(10)</a>
+
+                    
+                </li>
+                                        
+        </ul>
+    </div></div>
+
+<!-- 最新评论 -->
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">
+        <a href="https://www.cnblogs.com/yZzcXQ/most-viewed" class="sidebar-card-title-a">
+    阅读排行榜
+</a>
+
+    </h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html">
+                            1. JAVA反射概念及使用详解(超详细)(5837)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/Lambda-FunctionInterface.html">
+                            2. Java  Lambda表达式与函数式接口(1452)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-anno.html">
+                            3. Java注解 看这一篇就够了(649)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/Stream-map-flatMap.html">
+                            4. Java流中的map算子和flatMap算子的区别(613)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-thread.html">
+                            5. Java多线程的wait()，notify()，notifyAll()、sleep()和yield()方法使用详解(325)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div></div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">
+        <a href="https://www.cnblogs.com/yZzcXQ/most-commented" class="sidebar-card-title-a">评论排行榜</a>
+
+    </h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html">
+                            1. JAVA反射概念及使用详解(超详细)(1)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div></div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">
+            <a href="https://www.cnblogs.com/yZzcXQ/most-liked" class="sidebar-card-title-a">推荐排行榜</a>
+
+        </h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html">
+                                1. JAVA反射概念及使用详解(超详细)(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div></div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle"><a href="https://www.cnblogs.com/yZzcXQ/comments" class="sidebar-card-title-a">最新评论</a></h3>    
+    <div class="RecentCommentBlock">
+        <ul>
+                <li class="recent_comment_title"><a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html">1. Re:JAVA反射概念及使用详解(超详细)</a></li>
+                <li class="recent_comment_body"><p>所以反射的定义是什么，反射是什么？ 反射是框架的灵魂，这么回答是不是太草率了</p>
+</li>
+                <li class="recent_comment_author">--Joker-云玖</li>
+        </ul>
+    </div>
+</div></div>
+
+
+</div>
+                    <script>loadBlogSideColumn();</script>
+                    <!-- end:  SingleColumn -->
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div id="footer">
+        <!--done-->
+Copyright © 2022 yZzc_XQ
+<br><span id="poweredby">Powered by .NET 6 on Kubernetes</span>
+
+    </div>
+</div>
+
+
+
+
+<input type="hidden" id="antiforgery_token" value="CfDJ8NfDHj8mnYFAmPyhfXwJojfAH40gDlk6NiFf3biS4aSGxSoSITHwU09kWwdmVWhiBK75rGtu7hGQ6HqtmMcTBj5A9QRdaNPu3sDYO3GNRpJPwpJ3ukoUn307yIWS-9UYu0vpXYE8rkI_gLMczurfNjcEFE7b5R8Drsi8olyJ80sLr7sfDoRwDvwONXrYS1rDMQ">
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer="" src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+
+</body></html>

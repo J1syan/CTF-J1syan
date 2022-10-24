@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html -->
+<html lang="zh-cn" style="--olcb-folder-code-block-max-height:80vh;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin-when-cross-origin">
+    <meta name="description" content="JAVA反射概念及使用详解">
+    <meta property="og:description" content="JAVA反射概念及使用详解">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="https://common.cnblogs.com/favicon.svg" type="image/svg+xml">
+    
+    <style>#home :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs), :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs) {background: rgb(245, 245, 245);
+        padding: 12px;
+        border: 1px solid rgb(204, 204, 204);
+        border-radius: 3px;
+        border-color: transparent;
+        color: rgb(68, 68, 68);
+        font-family: "Courier New", sans-serif;
+        font-size: 12px</style><link rel="stylesheet" href="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/blog-common.min.css">
+    
+
+    <link id="MainCss" rel="stylesheet" href="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/bundle-simpleblue.min.css">
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/cnblogs.css">
+    
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/bundle-simpleblue-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/yZzcXQ/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/yZzcXQ/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/yZzcXQ/wlwmanifest.xml">
+    <script>
+        var currentBlogId = 586203;
+        var currentBlogApp = 'yZzcXQ';
+        var isLogined = true;
+        var isBlogOwner = false;
+        var skinName = 'SimpleBlue';
+        var visitorUserId = '91fc3111-2748-43f4-b8f5-08da3b3354ad';
+        var hasCustomScript = false;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function(){ return ''; } });
+            }
+        } catch(error) { }
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+    </script>
+        <script>
+            var currentPostDateAdded = '2020-03-18 21:43';
+        </script>
+    <script src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/blog-common.min.js.下载"></script><style>.medium-zoom-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 300ms;
+  will-change: opacity;
+}
+
+.medium-zoom--opened .medium-zoom-overlay {
+  cursor: pointer;
+  cursor: zoom-out;
+  opacity: 1;
+}
+
+.medium-zoom-image {
+  cursor: pointer;
+  cursor: zoom-in;
+  /*
+    The `transition` is marked as "!important" for the animation to happen
+    even though it's overriden by another inline `transition` style attribute.
+
+    This is problematic with frameworks that generate inline styles on their
+    images (e.g. Gatsby).
+
+    See https://github.com/francoischalifour/medium-zoom/issues/110
+   */
+  transition: transform 300ms cubic-bezier(0.2, 0, 0.2, 1) !important;
+}
+
+.medium-zoom-image--hidden {
+  visibility: hidden;
+}
+
+.medium-zoom-image--opened {
+  position: relative;
+  cursor: pointer;
+  cursor: zoom-out;
+  will-change: transform;
+}
+</style><script id="hljs-script" src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/highlight.min.js.下载" type="text/javascript" async=""></script>
+    
+
+    
+</head>
+<body class="skin-simpleblue has-navbar hljs-engine">
+<a name="top"></a>
+<div id="top_nav" class="navbar forpc">
+    <nav id="nav_main" class="navbar-main">
+        <ul id="nav_left" class="navbar-list navbar-left">
+            <li class="navbar-branding">
+                <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                    <img src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/logo.svg" alt="博客园Logo">
+                </a>
+            </li>
+            <li>
+                <a href="https://www.cnblogs.com/" onclick="countClicks(&#39;skin-navbar-sitehome&#39;)">首页</a>
+            </li>
+            <li>
+                <a href="https://news.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-news&#39;)">新闻</a>
+            </li>
+            <li>
+                <a href="https://q.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-q&#39;)">博问</a>
+            </li>
+            <li>
+                <a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-brands&#39;)">专区</a>
+            </li>
+            <li>
+                <a href="https://ing.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-ing&#39;)">闪存</a>
+            </li>
+            <li>
+                <a href="https://edu.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-edu&#39;)">班级</a>
+            </li>
+        </ul>
+        <ul id="nav_right" class="navbar-list navbar-right">
+            <li>
+                <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                    <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3">
+                    <button type="submit" id="zzk_search_button">
+                        <img src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/search.svg" alt="搜索">
+                    </button>
+                </form>
+            </li>
+            <li id="navbar_login_status" class="navbar-list">
+                <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔" style="display: inline;">
+                    <img id="new_post_icon" class="navbar-icon" src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/newpost.svg" alt="写随笔">
+                </a>
+                <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://www.cnblogs.com/J1syan/" alt="我的博客" title="我的博客" style="display: inline;">
+                    <img id="myblog_icon" class="navbar-icon" src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/myblog.svg" alt="我的博客">
+                </a>
+                <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息" style="display: inline;">
+                    <img id="msg_icon" class="navbar-icon" src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/message.svg" alt="短消息">
+                    <span id="msg_count" style="display: none"></span>
+                </a>
+                <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                    <img class="navbar-icon" src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/lite-mode-on.svg" alt="简洁模式">
+                </a>
+                <div id="user_info" class="navbar-user-info dropdown" style="display: block;">
+                    <a class="dropdown-button" href="https://home.cnblogs.com/u/J1syan">
+                        <img id="user_icon" class="navbar-avatar" src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/20220529010229.png" alt="用户头像">
+                    </a>
+                    <div class="dropdown-menu">
+                        <a id="navblog-myblog-text" href="https://www.cnblogs.com/J1syan/">我的博客</a>
+                        <a href="https://home.cnblogs.com/">我的园子</a>
+                        <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                        <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/lite-mode-check.svg" class="hide" style="display: none;"><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                        <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                    </div>
+                </div>
+                <a class="navbar-anonymous" href="https://account.cnblogs.com/signup" style="display: none;">注册</a>
+                <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()" style="display: none;">登录</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+
+<div id="home">
+    <div id="header">
+        <div id="blogTitle">
+            <div class="title"><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/yZzcXQ/">yZzc_XQ</a>
+</div>
+<div class="subtitle"></div>
+
+        </div>
+        <div id="navigator">
+            
+<ul id="navList">
+    <li id="nav_sitehome"><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+    <li id="nav_myhome">
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/yZzcXQ/">
+首页</a>
+</li>
+    <li id="nav_newpost">
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+    <li id="nav_contact">
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/yZzc_XQ">
+联系</a></li>
+    <li id="nav_rss">
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/yZzcXQ/rss/">订阅</a></li>
+    <li id="nav_admin">
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+            <div class="blogStats">
+                
+<span id="stats_post_count">随笔 - 10&nbsp;</span>
+<span id="stats_article_count">文章 - 0&nbsp;</span>
+<span id="stats_comment_count">评论 - 1&nbsp;</span>
+<span id="stats_total_view_count">阅读 - 
+<span title="总阅读数: 9799">
+9799</span></span>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="mainContent">
+            <div class="forFlow">
+                <div id="post_detail">
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html">
+    <span role="heading" aria-level="2">JAVA反射概念及使用详解(超详细)</span>
+    
+</a><button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                    <div id="cnblogs_post_description" style="display: none">
+        
+        JAVA反射概念及使用详解
+    </div>
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h1 id="java反射概念及使用详解">JAVA反射概念及使用详解<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h1>
+<h2 id="一什么是反射">一、什么是反射？<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<h3 id="反射框架设计的灵魂">反射：框架设计的灵魂<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h3>
+<p>框架：半成品软件。可以在框架的基础上进行软件开发，简化编码</p>
+<p>反射：将类的各个组成部分封装为其他对象，这就是反射机制</p>
+<p>​			好处：</p>
+<p>​					可以在程序运行过程中，操作这些对象。</p>
+<p>​					可以解耦，提高程序的可扩展性。</p>
+<p><img src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/1971784-20200318213431784-380911490.png" alt="" loading="lazy" class="medium-zoom-image"></p>
+<p>图片来源https://blog.csdn.net/qsbbl/article/details/85801571</p>
+<p>定义：JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法，这种动态获取、调用对象方法的功能称为java语言的反射机制。</p>
+<p>反射是通过Class对象(字节码文件)，来知道某个类的所有属性和方法。也就是说通过反射我们可以获取构造器，对象，属性，方法（原本不知道）</p>
+<p>不像现在这个类我们能看见，之后在JAVA框架中，很多类我们是看不见的，不能直接用类名去获取对象，只能通过反射去获取。</p>
+<p><img src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/1971784-20200318213539251-923984642.png" alt="" loading="lazy" class="medium-zoom-image"></p>
+<p>图片来源https://blog.csdn.net/sinat_38259539/article/details/71799078</p>
+<h2 id="二获取class对象的三种方式">二、获取Class对象的三种方式：<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>要想使用反射，必须先得到代表的字节码的Class对象，Class类用于表示.class文件（字节码）</p>
+<h3 id="1通过该类的对象去获取到对应的class对象基本不用它">1.通过该类的对象去获取到对应的Class对象（基本不用它）<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h3>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//第一种方式: student---&gt;Class对象  通过getClass()方法</span>
+<span class="hljs-comment">//Student是一个空类</span>
+<span class="hljs-type">Student</span> <span class="hljs-variable">student</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>();
+<span class="hljs-comment">//这里我们就省去泛型了，Class&lt;?&gt;</span>
+<span class="hljs-type">Class</span> <span class="hljs-variable">stuClass</span> <span class="hljs-operator">=</span> student.getClass();  <span class="hljs-comment">//获取到了对应的Class对象</span>
+
+System.out.println(stuClass);
+System.out.println(stuClass.getName());  <span class="hljs-comment">//获取Class对象的名字</span>
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs">输出：
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">fanshe</span>.Student
+fanshe.Student
+</code></pre>
+<p>但是需要注意的是，第一种我们基本不用，这里显然和反射机制相悖（你有类对象 student 还去用反射获取Class类对象干嘛，多此一举）</p>
+<h3 id="2通过类名class静态属性获取比较简单">2.通过类名.class静态属性获取（比较简单）<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h3>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//第二种方式:  每个类创建后 都会有一个默认的静态的class属性 用于返回该类的class对象</span>
+<span class="hljs-comment">//需要注意的是:  任何数据类型（包括基本数据类型）都有“静态”的class属性</span>
+<span class="hljs-type">Class</span> <span class="hljs-variable">stuClass2</span> <span class="hljs-operator">=</span> Student.class;
+System.out.println(<span class="hljs-string">"是否为同一个class对象?"</span>+(stuClass==stuClass2));
+</code></pre>
+<p>结果：true</p>
+<p>这里需要注意的是，这种方式<strong>虽然比较简单，但是需要导包，不然会编译错误</strong>（对比第三种，全限定类名方式）</p>
+<h3 id="3通过class类中的静态方法-forname方法获取最为常见">3.通过Class类中的静态方法 forName()方法获取（最为常见）<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h3>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//第三种方式:  Class.forName("fanshe.Student");  注意参数一定为该类的全限定类名</span>
+<span class="hljs-keyword">try</span> {
+	<span class="hljs-type">Class</span> <span class="hljs-variable">stuClass3</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">"fanshe.Student"</span>);
+	<span class="hljs-comment">//System.out.println(stuClass3); 输出仍然是class fanshe.Student</span>
+	System.out.println(<span class="hljs-string">"是否为同一个class对象?"</span>+(stuClass3==stuClass2));
+} <span class="hljs-keyword">catch</span> (ClassNotFoundException e) {
+	e.printStackTrace();
+}
+</code></pre>
+<p>结果：true</p>
+<p>结论：同一个字节码文件(*.class)在一次程序运行过程中，只会被加载一次，不论通过哪一种方式获取的Class对象都是同一个。</p>
+<h2 id="二通过class对象获取到该类的构造器">二、通过Class对象获取到该类的构造器:<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>获取到Class对象后，我们就可以通过Class对象获取到该类的构造器了。有很多方法，以下逐一介绍：</p>
+<p>首先创建一个Class对象</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-type">Class</span> <span class="hljs-variable">stuClass</span> <span class="hljs-operator">=</span> Student.class;<span class="hljs-comment">//我们采用了第二种方式</span>
+</code></pre>
+<p>这个是我的Student类，为了演示构造了多个构造器</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> {
+	
+	<span class="hljs-comment">//通过多个构造器不同的修饰符  不同的形参列表</span>
+	
+	Student(String name) {
+		System.out.println(<span class="hljs-string">"用default修饰的Student的含有一个String参数的构造器:"</span>+name);
+	}
+	<span class="hljs-keyword">public</span> <span class="hljs-title function_">Student</span><span class="hljs-params">()</span> {
+		System.out.println(<span class="hljs-string">"用public修饰的Student的无参构造器"</span>);
+	}
+	<span class="hljs-keyword">public</span> <span class="hljs-title function_">Student</span><span class="hljs-params">(String name,<span class="hljs-type">int</span> age)</span> {
+		System.out.println(<span class="hljs-string">"用public修饰的Student的含有两个参数的构造器:"</span>+name+age);
+	}
+	<span class="hljs-keyword">public</span> <span class="hljs-title function_">Student</span><span class="hljs-params">(<span class="hljs-type">boolean</span> sex)</span> {
+		System.out.println(<span class="hljs-string">"用public修饰的Student的含有一个参数的构造器:"</span>+sex);
+	}
+	<span class="hljs-keyword">protected</span> <span class="hljs-title function_">Student</span><span class="hljs-params">(<span class="hljs-type">int</span> age)</span> {
+		System.out.println(<span class="hljs-string">"用protected修饰的Student的含有一个参数的构造器:"</span>+age);
+	}
+	<span class="hljs-keyword">private</span> <span class="hljs-title function_">Student</span><span class="hljs-params">(String name,<span class="hljs-type">int</span> age,<span class="hljs-type">boolean</span> sex)</span> {
+		System.out.println(<span class="hljs-string">"用private修饰的Student的含有三个参数的构造器:"</span>+name+age+sex);
+	}
+
+}
+</code></pre>
+<p>1.getDeclaredConstructors()<br>
+返回 Constructor 对象的一个数组，这些对象反映此 Class 对象表示的类声明的所有构造方法</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs">Constructor[] conArray01 = stuClass.getDeclaredConstructors();
+<span class="hljs-keyword">for</span> (Constructor constructor : conArray01) {
+	System.out.println(constructor);
+}
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//输出结果：输出了所有的构造器</span>
+<span class="hljs-keyword">private</span> fanshe.Student(java.lang.String,<span class="hljs-type">int</span>,<span class="hljs-type">boolean</span>)
+<span class="hljs-keyword">protected</span> fanshe.Student(<span class="hljs-type">int</span>)
+<span class="hljs-keyword">public</span> fanshe.Student(<span class="hljs-type">boolean</span>)
+<span class="hljs-keyword">public</span> fanshe.Student(java.lang.String,<span class="hljs-type">int</span>)
+<span class="hljs-keyword">public</span> fanshe.Student()
+fanshe.Student(java.lang.String)
+</code></pre>
+<p>2.getConstructors()<br>
+返回一个包含某些 Constructor 对象的数组，这些对象反映此 Class 对象所表示的类的所有公共（public）构造方法。</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs">Constructor[] consArray02 = stuClass.getConstructors();
+<span class="hljs-keyword">for</span> (Constructor constructor : consArray02) {
+	System.out.println(constructor);
+}
+
+<span class="hljs-comment">//输出的是所有的public修饰的构造方法：</span>
+<span class="hljs-comment">//public fanshe.Student(boolean)</span>
+<span class="hljs-comment">//public fanshe.Student(java.lang.String,int)</span>
+<span class="hljs-comment">//public fanshe.Student()</span>
+</code></pre>
+<p>3.getConstructor(Class&lt;?&gt;... parameterTypes)<br>
+返回一个 Constructor 对象，它反映此 Class 对象所表示的类的指定公共（public）构造方法。</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="highlighter-hljs hljs language-delphi"><span class="hljs-comment">//参数为长度可变的形参:获取指定的构造器  参数为指定构造器的形参类型对应的class对象</span>
+<span class="hljs-comment">//用public修饰的构造器</span>
+<span class="hljs-function"><span class="hljs-keyword">Constructor</span> <span class="hljs-title">con0</span> = <span class="hljs-title">stuClass</span>.<span class="hljs-title">getConstructor</span><span class="hljs-params">(null)</span>;</span>  <span class="hljs-comment">//无参的  无参构造器参数就是null或者空，等同于stuClass.getConstructor()</span>
+<span class="hljs-function"><span class="hljs-keyword">Constructor</span> <span class="hljs-title">con</span> = <span class="hljs-title">stuClass</span>.<span class="hljs-title">getConstructor</span><span class="hljs-params">(boolean.<span class="hljs-keyword">class</span>)</span>;</span>  <span class="hljs-comment">//boolean的</span>
+System.<span class="hljs-keyword">out</span>.println(con0);
+System.<span class="hljs-keyword">out</span>.println(con);
+
+<span class="hljs-comment">//输出：</span>
+<span class="hljs-comment">//public fanshe.Student()</span>
+<span class="hljs-comment">//public fanshe.Student(boolean)</span>
+</code></pre>
+<p>注意，输出的都是public类型的，也只能是public类型的。</p>
+<p>4.getDeclaredConstructor(Class&lt;?&gt;... parameterTypes)<br>
+返回一个 Constructor 对象，该对象反映此 Class 对象所表示的类或接口的指定构造方法。</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-type">Constructor</span> <span class="hljs-variable">con1</span> <span class="hljs-operator">=</span> stuClass.getDeclaredConstructor(<span class="hljs-type">int</span>.class);
+System.out.println(con1);
+<span class="hljs-type">Constructor</span> <span class="hljs-variable">con2</span> <span class="hljs-operator">=</span> stuClass.getDeclaredConstructor(String.class,<span class="hljs-type">int</span>.class,<span class="hljs-type">boolean</span>.class);
+System.out.println(con2);
+
+<span class="hljs-comment">//输出：</span>
+<span class="hljs-comment">//protected fanshe.Student(int)</span>
+<span class="hljs-comment">//private fanshe.Student(java.lang.String,int,boolean)</span>
+</code></pre>
+<p><strong>总结：</strong></p>
+<p>​	<strong>①有参数的3和4，返回的都是一个构造器（好理解，构造器重载要求参数列表不一样）。没参数的1和2，返回的都是Constructor类型的数组。你可以这样记：方法名加了s，例getConstructors(), 的返回都是多个构造器，没有s的都是一个。</strong></p>
+<p>​	<strong>②方法名包含了Declared返回的构造器访问权限修饰符没有限制，而没有包含Declared例getConstructors()，返回的都是public修饰的构造器。</strong></p>
+<p>​	简而言之：加s的比没加s的返回的构造方法多，加Declared比没加的多，全加的（getDeclaredConstructors()）最多</p>
+<p>那么获取了构造器如何去创建对象呢？</p>
+<h2 id="三通过获取到的构造器创建对象">三、通过获取到的构造器创建对象：<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//这里我们需要捕获一下异常</span>
+<span class="hljs-comment">//因为我们的构造器是私有的，不能在其他类去创建，所以我们用了setAccessible()这个方法，从而可以创建</span>
+<span class="hljs-comment">/*
+private Student(String name,int age,boolean sex){
+		System.out.println("用private修饰的Student的含有三个参数的构造器:"+name+age+sex);
+}*/</span>
+<span class="hljs-keyword">try</span> {
+	con2.setAccessible(<span class="hljs-literal">true</span>);   <span class="hljs-comment">//忽略构造器的访问修饰符,解除私有限定</span>
+	<span class="hljs-type">Object</span> <span class="hljs-variable">object</span> <span class="hljs-operator">=</span> con2.newInstance(<span class="hljs-string">"张三"</span>,<span class="hljs-number">10</span>,<span class="hljs-literal">true</span>);  <span class="hljs-comment">//这句话就相当于new Student("张三",10,true);</span>
+	<span class="hljs-type">Student</span> <span class="hljs-variable">student</span> <span class="hljs-operator">=</span> (Student) object;  <span class="hljs-comment">//指向子类对象的父类引用重新转为子类引用</span>
+} <span class="hljs-keyword">catch</span> (Exception e) {
+	e.printStackTrace();
+} 
+
+<span class="hljs-comment">//输出：用private修饰的Student的含有三个参数的构造器:张三10true</span>
+</code></pre>
+<p><strong>注意：</strong></p>
+<p>​	<strong>xxx.setAccessible(true) 是为了解除私有限定，以后会经常出现，之后就不多加解释了</strong></p>
+<h2 id="四-通过class对象获取成员变量">四、 通过Class对象获取成员变量<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>以下方法有很多异常需要抛出，我就省略了</p>
+<p>先定义一个Teacher类：</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Teacher</span> {
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-title function_">Teacher</span><span class="hljs-params">()</span> {
+	}
+	
+	<span class="hljs-keyword">public</span> String name;
+	
+	<span class="hljs-keyword">protected</span> <span class="hljs-type">int</span> age;
+	
+	<span class="hljs-type">boolean</span> sex;
+	
+	<span class="hljs-keyword">private</span> String address;
+
+	<span class="hljs-meta">@Override</span>
+	<span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"Teacher [name="</span> + name + <span class="hljs-string">", age="</span> + age + <span class="hljs-string">", sex="</span> + sex + <span class="hljs-string">", address="</span> + address + <span class="hljs-string">"]"</span>;
+	}
+	
+}
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-type">Class</span> <span class="hljs-variable">teaClass</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">"fanshe.Teacher"</span>);	<span class="hljs-comment">//创建Class对象（第三种方式）</span>
+
+<span class="hljs-comment">//获取Teacher类中的所有的public字段</span>
+Field[] f = teaClass.getFields();
+<span class="hljs-keyword">for</span> (Field field : f) {
+	System.out.println(field);
+}
+
+<span class="hljs-comment">//获取Teacher类中的所有的字段(包含各种访问修饰符)</span>
+System.out.println(<span class="hljs-string">"===========所有的字段=======================&gt;"</span>);
+Field[] df = teaClass.getDeclaredFields();
+<span class="hljs-keyword">for</span> (Field field : df) {
+	System.out.println(field);
+}
+System.out.println(<span class="hljs-string">"===========公共的特定的字段=======================&gt;"</span>);
+<span class="hljs-comment">// 获取公共的特定的字段</span>
+<span class="hljs-type">Field</span> <span class="hljs-variable">field</span> <span class="hljs-operator">=</span> teaClass.getField(<span class="hljs-string">"name"</span>);
+System.out.println(field);
+System.out.println(<span class="hljs-string">"===========特定的字段=======================&gt;"</span>);
+<span class="hljs-comment">// 获取特定的字段</span>
+<span class="hljs-type">Field</span> <span class="hljs-variable">field2</span> <span class="hljs-operator">=</span> teaClass.getDeclaredField(<span class="hljs-string">"age"</span>);
+System.out.println(field2);
+
+<span class="hljs-comment">/**
+ * 为字段设置具体的值
+ * 参数一:该类的对象
+ * 参数二:为特定的属性赋值
+ */</span>
+<span class="hljs-type">Object</span> <span class="hljs-variable">object</span> <span class="hljs-operator">=</span> teaClass.getConstructor().newInstance();<span class="hljs-comment">//相当于Object object = new Teacher();</span>
+field.set(object, <span class="hljs-string">"张三丰"</span>);
+
+System.out.println(<span class="hljs-string">"名称为:"</span>+((Teacher)object).name);
+</code></pre>
+<p>输出结果：</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-keyword">public</span> java.lang.String fanshe.Teacher.name  <span class="hljs-comment">//所有public字段</span>
+===========所有的字段=======================&gt;
+<span class="hljs-keyword">public</span> java.lang.String fanshe.Teacher.name
+<span class="hljs-keyword">protected</span> <span class="hljs-type">int</span> fanshe.Teacher.age
+<span class="hljs-type">boolean</span> fanshe.Teacher.sex
+<span class="hljs-keyword">private</span> java.lang.String fanshe.Teacher.address
+===========公共的特定的字段=======================&gt;
+<span class="hljs-keyword">public</span> java.lang.String fanshe.Teacher.name
+===========特定的字段=======================&gt;
+<span class="hljs-keyword">protected</span> <span class="hljs-type">int</span> fanshe.Teacher.age
+名称为:张三丰
+</code></pre>
+<p>记忆方法同上，这里就不赘述了。</p>
+<h2 id="五通过class对象获取到该类的方法">五、通过Class对象获取到该类的方法<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>首先创建了一个Employee类：</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Employee</span> {
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-title function_">Employee</span><span class="hljs-params">()</span> {}
+	
+	<span class="hljs-keyword">public</span> String name;
+	
+	<span class="hljs-keyword">protected</span> <span class="hljs-type">double</span> money;
+	
+	String address;
+	
+	<span class="hljs-keyword">private</span> <span class="hljs-type">long</span> number;
+	
+	
+	<span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">getDayMoney</span><span class="hljs-params">(String name)</span> {
+		System.out.println(<span class="hljs-string">"我是Employee受保护的获取日薪的方法,有一个参数为:"</span>+name);
+	}
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">getweekMoney</span><span class="hljs-params">(String name,<span class="hljs-type">double</span> money)</span> {
+		System.out.println(<span class="hljs-string">"我是Employee公有的获取周薪的方法,没有参数.."</span>);
+	}
+	
+	<span class="hljs-keyword">void</span> <span class="hljs-title function_">getMonthMoney</span><span class="hljs-params">()</span> {
+		System.out.println(<span class="hljs-string">"我是Employee默认的获取月薪的方法,没有参数.."</span>);
+	}
+	
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">getYearMoney</span><span class="hljs-params">(<span class="hljs-type">int</span> age)</span> {
+		System.out.println(<span class="hljs-string">"我是Employee私有的的获年薪月薪的方法,有一个参数为:"</span>+age);
+	}
+	
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
+		System.out.println(<span class="hljs-string">"Employee中的main()方法执行了..."</span>);
+		System.out.println(Arrays.toString(args));
+	}
+    
+	<span class="hljs-meta">@Override</span>
+	<span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"Employee [name="</span> + name + <span class="hljs-string">", money="</span> + money + <span class="hljs-string">", address="</span> + address + <span class="hljs-string">", number="</span> + number + <span class="hljs-string">"]"</span>;
+	}
+	
+}
+</code></pre>
+<p>通过Class对象去获取该类的方法：</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs">Class&lt;?&gt; emplClass = Class.forName(<span class="hljs-string">"fanshe.Employee"</span>);
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//1.获取所有的公共的方法  （包含父类的方法）</span>
+Method[] methods = emplClass.getMethods();
+<span class="hljs-keyword">for</span> (Method method : methods) {
+	System.out.println(method);
+}
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//输出：</span>
+<span class="hljs-keyword">public</span> java.lang.String fanshe.Employee.toString()
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> fanshe.Employee.getweekMoney(java.lang.String,<span class="hljs-type">double</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> java.lang.Object.wait() <span class="hljs-keyword">throws</span> java.lang.InterruptedException
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> java.lang.Object.wait(<span class="hljs-type">long</span>,<span class="hljs-type">int</span>) <span class="hljs-keyword">throws</span> java.lang.InterruptedException
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">native</span> <span class="hljs-keyword">void</span> java.lang.Object.wait(<span class="hljs-type">long</span>) <span class="hljs-keyword">throws</span> java.lang.InterruptedException
+<span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> java.lang.Object.equals(java.lang.Object)
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">native</span> <span class="hljs-type">int</span> java.lang.Object.hashCode()
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">native</span> java.lang.Class java.lang.Object.getClass()
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">native</span> <span class="hljs-keyword">void</span> java.lang.Object.notify()
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">native</span> <span class="hljs-keyword">void</span> java.lang.Object.notifyAll()
+</code></pre>
+<p><strong>注意：</strong></p>
+<p>​	<strong>1.上面的方法都是public公共的；</strong></p>
+<p>​	<strong>2.会将父类（Object）类中的公共方法也输出。</strong></p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//2.获取该类中的所有方法，以数组形式返回：</span>
+Method[] methods = emplClass.getDeclaredMethods();
+<span class="hljs-keyword">for</span> (Method method : methods) {
+	System.out.println(method);
+}
+
+<span class="hljs-comment">//输出：</span>
+<span class="hljs-keyword">public</span> java.lang.String fanshe.Employee.toString()
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> fanshe.Employee.getweekMoney(java.lang.String,<span class="hljs-type">double</span>)
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> fanshe.Employee.getYearMoney(<span class="hljs-type">int</span>)
+<span class="hljs-keyword">void</span> fanshe.Employee.getMonthMoney()
+<span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> fanshe.Employee.getDayMoney(java.lang.String)
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//3.获取特定的公有的方法：  只能是公共的</span>
+<span class="hljs-comment">//参数一:要获取的方法的名称,参数二:方法对应的形参列表的类型</span>
+<span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> emplClass.getMethod(<span class="hljs-string">"getweekMoney"</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]{String.class,<span class="hljs-type">double</span>.class});
+System.out.println(method);     <span class="hljs-comment">//输出：public void fanshe.Employee.getweekMoney(java.lang.String,double)</span>
+	
+<span class="hljs-comment">//4.获取特定的方法：	可以是私有的</span>
+<span class="hljs-type">Method</span> <span class="hljs-variable">method2</span> <span class="hljs-operator">=</span> emplClass.getDeclaredMethod(<span class="hljs-string">"getYearMoney"</span>, <span class="hljs-type">int</span>.class);
+System.out.println(method2);	<span class="hljs-comment">//输出：private void fanshe.Employee.getYearMoney(int)</span>
+
+</code></pre>
+<p>接下来我准备获取private void getYearMoney(int age) {}方法，然后去执行这个私有方法。</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//emplClass对应的类的对象</span>
+<span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> emplClass.getConstructor().newInstance();
+<span class="hljs-comment">//可以通过Employee类对象去直接调用非私有方法，我这里将测试类和Employee类放在了同一个包下，所有可以访问默认方法（包限定方法）</span>
+<span class="hljs-type">Employee</span> <span class="hljs-variable">employee</span> <span class="hljs-operator">=</span> (Employee)obj;
+employee.getMonthMoney();
+
+<span class="hljs-comment">//参数一:要调用的对象 参数二:方法具体要求传递的值   返回值:为调用该方法后的返回值所对应的对象,如果没有返回值（void）,则对象为null</span>
+method2.setAccessible(<span class="hljs-literal">true</span>);
+<span class="hljs-type">Object</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> method2.invoke(obj, <span class="hljs-number">20</span>);   <span class="hljs-comment">//执行method2方法对应的代码</span>
+System.out.println(result);
+
+<span class="hljs-comment">//输出：</span>
+<span class="hljs-comment">/*
+我是Employee默认的获取月薪的方法,没有参数..
+我是Employee私有的的获年薪月薪的方法,有一个参数为:20
+null
+*/</span>
+</code></pre>
+<p>调用Employee类的主方法(main)：</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs">Class&lt;?&gt; class1 = Class.forName(<span class="hljs-string">"fanshe.Employee"</span>);
+
+<span class="hljs-type">Method</span> <span class="hljs-variable">methodMain</span> <span class="hljs-operator">=</span> class1.getMethod(<span class="hljs-string">"main"</span>, String[].class);
+
+<span class="hljs-comment">//参数一:对象类型 null 当调用的方法为静态时,此时第一个参数可以为null</span>
+<span class="hljs-comment">//方式一：</span>
+<span class="hljs-type">Object</span> <span class="hljs-variable">object</span> <span class="hljs-operator">=</span> methodMain.invoke(<span class="hljs-literal">null</span>, (Object)<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]{<span class="hljs-string">"a"</span>,<span class="hljs-string">"b"</span>,<span class="hljs-string">"c"</span>,<span class="hljs-string">"d"</span>});
+<span class="hljs-comment">//方式二：</span>
+<span class="hljs-type">Object</span> <span class="hljs-variable">object</span> <span class="hljs-operator">=</span> methodMain.invoke(<span class="hljs-literal">null</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[] {<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]{<span class="hljs-string">"a"</span>,<span class="hljs-string">"b"</span>,<span class="hljs-string">"c"</span>,<span class="hljs-string">"d"</span>}});
+
+System.out.println(object);
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//输出：</span>
+Employee中的main()方法执行了...        <span class="hljs-comment">//这里是main方法里的输出 </span>
+[a, b, c, d]						<span class="hljs-comment">//main方法里的输出调用了toString</span>
+Employee中的main()方法执行了...
+[a, b, c, d]
+<span class="hljs-literal">null</span>								<span class="hljs-comment">//main方法返回类型为void，所以这里返回值为null</span>
+</code></pre>
+<h2 id="六通过method对象调用指定方法">六、通过Method对象调用指定方法<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<p>下面我们对Method中的invoke()方法进行详解。</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-keyword">public</span> Object <span class="hljs-title function_">invoke</span><span class="hljs-params">(Object obj, Object... args)</span>
+</code></pre>
+<p>对带有指定参数的指定对象调用由此 Method 对象表示的底层方法。<br>
+<strong>如果底层方法是静态的，那么可以忽略指定的 obj 参数。该参数可以为 null。</strong></p>
+<p>如果底层方法所需的形参数为 0，则所提供的 args 数组长度可以为 0 或 null。</p>
+<p>如果底层方法是静态的，并且尚未初始化声明此方法的类，则会将其初始化。</p>
+<p>如果方法正常完成，则将该方法返回的值返回给调用者；如果该值为基本类型，则首先适当地将其包装在对象中。但是，如果该值的类型为一组基本类型，则数组元素不 被包装在对象中；换句话说，将返回基本类型的数组。如果底层方法返回类型为 void，则该调用返回 null。</p>
+<p>参数：<br>
+obj - 从中调用底层方法的对象<br>
+args - 用于方法调用的参数<br>
+返回：<br>
+使用参数 args 在 obj 上指派该对象所表示方法的结果</p>
+<p>抛出：抛出的异常就不列举了，具体可以自己查API文档</p>
+<p>下面我单独创建了一个InvokeTest类去解释说明invoke方法的使用：</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">InvokeTest</span> {
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception {
+		
+		<span class="hljs-type">Class</span> <span class="hljs-variable">classType</span> <span class="hljs-operator">=</span> InvokeTest.class;
+		<span class="hljs-type">Object</span> <span class="hljs-variable">invoketest</span> <span class="hljs-operator">=</span> classType.getConstructor().newInstance();
+		
+        <span class="hljs-comment">//获取Method类对象</span>
+		<span class="hljs-type">Method</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> classType.getMethod(<span class="hljs-string">"add"</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[] {<span class="hljs-type">int</span>.class,<span class="hljs-type">int</span>.class});
+		
+		<span class="hljs-comment">/**
+		 * Method的invoke(Object obj,Object[] args) 该方法接收的参数必须为对象
+		 * 如果参数为基本数据类型,使用相应的包装类对象 返回的结果总是一个对象(其结果代表调用该方法后的返回值)
+		 */</span>
+        <span class="hljs-comment">//如果add方法是静态方法，那么可以这样写：Object object = m.invoke(null, new Integer(10), new Integer(20));</span>
+		<span class="hljs-type">Object</span> <span class="hljs-variable">object</span> <span class="hljs-operator">=</span> m.invoke(invoketest, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Integer</span>(<span class="hljs-number">10</span>), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Integer</span>(<span class="hljs-number">20</span>));
+		System.out.println(object);
+	}
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">add</span><span class="hljs-params">(<span class="hljs-type">int</span> param1,<span class="hljs-type">int</span> param2)</span> {
+		<span class="hljs-keyword">return</span> param1+param2;
+	}
+}
+<span class="hljs-comment">//输出：30</span>
+
+</code></pre>
+<h2 id="七反射的使用">七、反射的使用<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h2>
+<h3 id="1通过反射运行配置文件内容">1.通过反射运行配置文件内容：<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h3>
+<p>通过这种方式，当我们需要访问其他类的时候，不需要改动源码，利用反射，直接修改配置文件即可。</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FileDemo</span> {
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception {
+		
+		<span class="hljs-type">Class</span> <span class="hljs-variable">aClass</span> <span class="hljs-operator">=</span> Class.forName(getValue(<span class="hljs-string">"className"</span>));
+		
+		<span class="hljs-type">Method</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> aClass.getMethod(getValue(<span class="hljs-string">"methodName"</span>));
+		
+		m.invoke(aClass.getConstructor().newInstance());
+		
+	}
+	
+	
+	<span class="hljs-comment">//这个方法用于接收配置文件中与key所对应的value值</span>
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">getValue</span><span class="hljs-params">(String key)</span> <span class="hljs-keyword">throws</span> Exception {
+		
+		<span class="hljs-type">Properties</span> <span class="hljs-variable">pro</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();   <span class="hljs-comment">//获取配置文件的对象</span>
+		
+		<span class="hljs-type">FileReader</span> <span class="hljs-variable">reader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileReader</span>(<span class="hljs-string">"prop.txt"</span>);
+		pro.load(reader);  <span class="hljs-comment">//将流加载到配置文件对象中</span>
+        <span class="hljs-comment">//从输入流中读取属性列表（键和元素对）。通过对指定的文件（比如说上面的 prop.txt 文件）进行装载来获取该文件中的所有键 - 值对。以供 getProperty ( String key) 来搜索。</span>
+		
+		reader.close();
+		
+		<span class="hljs-keyword">return</span> pro.getProperty(key);<span class="hljs-comment">//用指定的键在此属性列表中搜索属性。也就是通过参数 key ，得到 key 所对应的 value。</span>
+	}
+
+}
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//prop.txt文件中的内容</span>
+className=fanshe.file.Apple
+methodName=taste           
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//Apple类</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Apple</span> {
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">taste</span><span class="hljs-params">()</span> {
+		System.out.println(<span class="hljs-string">"苹果真好吃啊..."</span>);
+	}
+
+}
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//输出：</span>
+苹果真好吃啊...
+</code></pre>
+<p><strong>总结一下步骤：</strong></p>
+<p>​	<strong>1.通过Class类中的forName静态方法获取Apple类的Class类对象；</strong></p>
+<p>​	<strong>2.通过Class类对象获取Method类对象，参数传入要调用方法的方法名;</strong></p>
+<p>​	<strong>3.通过Method类的invoke非静态方法，调用这个方法，参数传入类对象和调用的方法的参数对象（我这里的test方法没有参数，所有invoke参数只有Apple类的对象）。</strong></p>
+<p>Java中有个比较重要的类Properties（Java.util.Properties），主要用于读取Java的配置文件。</p>
+<p>上面的例子是获取text文件中的，而配置文件（.properties文件）读取方式略有不同：</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ReflectTest</span> {
+	
+	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception {	
+		
+		<span class="hljs-comment">//1.加载配置文件</span>
+		<span class="hljs-comment">//1.1创建Properties对象</span>
+		<span class="hljs-type">Properties</span> <span class="hljs-variable">pro</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();
+		<span class="hljs-comment">//1.2获取到class目录下的配置文件</span>
+		<span class="hljs-type">ClassLoader</span> <span class="hljs-variable">classLoader</span> <span class="hljs-operator">=</span> ReflectTest.class.getClassLoader();
+		<span class="hljs-type">InputStream</span> <span class="hljs-variable">is</span> <span class="hljs-operator">=</span> classLoader.getResourceAsStream(<span class="hljs-string">"pro.properties"</span>);
+		
+		<span class="hljs-comment">//1.3加载配置文件</span>
+		pro.load(is);
+		
+		<span class="hljs-comment">//2.获取到配置文件中定义的数据</span>
+		<span class="hljs-type">String</span> <span class="hljs-variable">className</span> <span class="hljs-operator">=</span> pro.getProperty(<span class="hljs-string">"className"</span>);
+		<span class="hljs-type">String</span> <span class="hljs-variable">methodName</span> <span class="hljs-operator">=</span> pro.getProperty(<span class="hljs-string">"methodName"</span>);
+		
+		<span class="hljs-comment">//3.有了全限定类名 有了方法名(参数) 完全可以通过反射调用该方法</span>
+		
+		<span class="hljs-comment">//3.1:获取到该类的Class对象</span>
+		<span class="hljs-type">Class</span> <span class="hljs-variable">cls</span> <span class="hljs-operator">=</span> Class.forName(className);
+		
+		<span class="hljs-comment">//3.2:获取到该类的实例对象</span>
+		<span class="hljs-type">Object</span> <span class="hljs-variable">object</span> <span class="hljs-operator">=</span> cls.getConstructor().newInstance();
+		
+		<span class="hljs-comment">//3.3:获取到该类特定的方法对象</span>
+		<span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> cls.getMethod(methodName);
+		
+		<span class="hljs-comment">//4.执行方法</span>
+		method.invoke(object);
+		
+	}
+
+}
+
+</code></pre>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-java highlighter-hljs hljs"><span class="hljs-comment">//pro.properties文件内容，这个配置文件可以包-&gt;右键-&gt;New-&gt;File-&gt;File name:pro.properties</span>
+className=bean.Student
+methodName=study
+</code></pre>
+<p>Student类和运行结果这里就不列举了，和上面的差不多</p>
+<h3 id="2通过反射越过泛型检查">2.通过反射越过泛型检查：<button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button></h3>
+<p>我们的目的是：向String泛型集合中添加一个Integer对象</p>
+<pre class="highlighter-hljs" highlighted="true"><code class="language-Java highlighter-hljs hljs">List&lt;String&gt; list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();
+list.add(<span class="hljs-string">"我爱Java"</span>);
+list.add(<span class="hljs-string">"成功上岸"</span>);
+<span class="hljs-comment">//list.add(100);    如果直接add直接会编译报错</span>
+
+<span class="hljs-comment">//1.获取到List类的Class对象</span>
+<span class="hljs-type">Class</span> <span class="hljs-variable">listClass</span> <span class="hljs-operator">=</span> list.getClass();
+
+<span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> listClass.getMethod(<span class="hljs-string">"add"</span>, Object.class);
+
+method.invoke(list, <span class="hljs-number">100</span>);
+
+<span class="hljs-keyword">for</span> (Object object : list) {
+	System.out.println(object);
+}
+
+<span class="hljs-comment">/*输出：
+我爱Java
+成功上岸
+100
+*/</span>
+</code></pre>
+<p>如有错误，欢迎指点</p>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/yZzcXQ/category/1674129.html" target="_blank">JavaSE</a></div>
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/JavaSE/">JavaSE</a>,             <a href="https://www.cnblogs.com/yZzcXQ/tag/%E5%8F%8D%E5%B0%84/">反射</a>,             <a href="https://www.cnblogs.com/yZzcXQ/tag/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象</a>,             <a href="https://www.cnblogs.com/yZzcXQ/tag/Java/">Java</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(12520552,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;f6a797ee-120e-46a6-ff9b-08d7c7fac060&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/yZzcXQ/" target="_blank"><img src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/20200314175119.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/yZzcXQ/">yZzc_XQ</a><br>
+            <a href="https://home.cnblogs.com/u/yZzcXQ/followers/">粉丝 - <span class="follower-count">1</span></a>
+            <a href="https://home.cnblogs.com/u/yZzcXQ/followees/">关注 - <span class="following-count">0</span></a><br>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow" class="follow-tip">
+                <a href="javascript:void(0);" onclick="follow(&#39;f6a797ee-120e-46a6-ff9b-08d7c7fac060&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(12520552,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">1</span>
+    </div>
+    <div class="buryit" onclick="votePost(12520552,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <br>
+    <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-thread.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-thread.html" data-featured-image="" title="发布于 2020-03-18 21:56">Java多线程的wait()，notify()，notifyAll()、sleep()和yield()方法使用详解</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2020-03-18 21:43</span>&nbsp;
+<a href="https://www.cnblogs.com/yZzcXQ/">yZzc_XQ</a>&nbsp;
+阅读(<span id="post_view_count">5838</span>)&nbsp;
+评论(<span id="post_comment_count">1</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=12520552" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(12520552);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: &#39;91fc3111-2748-43f4-b8f5-08da3b3354ad&#39;, targetType: &#39;blogPost&#39;, targetId: &#39;12520552&#39;, targetLink: &#39;https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html&#39;, title: &#39;JAVA反射概念及使用详解(超详细)&#39; })">举报</a></div>
+        </div>
+        
+<script>
+    var cb_entryId = 12520552, cb_entryCreatedDate = '2020-03-18 21:43', cb_postType = 1, cb_postTitle = 'JAVA反射概念及使用详解(超详细)';
+    var allowComments = true, cb_blogId = 586203, cb_blogApp = 'yZzcXQ', cb_blogUserGuid = 'f6a797ee-120e-46a6-ff9b-08d7c7fac060';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+        <a id="!comments"></a>
+<div id="blog-comments-placeholder">
+
+<div id="comment_pager_top">
+    
+</div>
+
+
+<div class="feedback_area_title">评论列表
+<div id="comment_sort" class="comment-sort" title="切换评论排序">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z"></path>
+        </svg>
+    <span class="comment-sort-label">时间升序</span>
+</div></div>
+<div class="feedbackNoItems"></div>
+
+    <div class="feedbackItem">
+        <div class="feedbackListSubtitle">
+            <div class="feedbackManage">
+                &nbsp;&nbsp;
+                
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(5038102, &#39;yR8egsW1onLnItCTKt4GfpbUCYaAM/razLYjiU/cwUrdfZ7U5SlGRg==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(5038102, &#39;yR8egsW1onLnItCTKt4GfpbUCYaAM/razLYjiU/cwUrdfZ7U5SlGRg==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+            </div>
+            <!-- Title -->
+            
+<a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html#5038102" class="layer">#1楼</a>
+<a name="5038102" id="comment_anchor_5038102"></a>
+    <span id="comment-maxId" style="display: none">5038102</span>
+    <span id="comment-maxDate" style="display: none">2022/4/1 下午4:05:41</span>
+
+            <!-- PostDate -->
+            
+<span class="comment_date">2022-04-01 16:05</span>
+
+
+            <!--NameLink-->
+            
+        <a id="a_comment_author_5038102" href="https://home.cnblogs.com/u/2584595/" target="_blank">Joker-云玖</a>
+
+            <div class="feedbackCon">
+                
+<div id="comment_body_5038102" data-format-type="Markdown" class="blog_comment_body cnblogs-markdown">
+    <p>所以反射的定义是什么，反射是什么？ 反射是框架的灵魂，这么回答是不是太草率了</p>
+
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(5038102, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(5038102, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+            </div>
+        </div>
+    </div>
+
+
+<div id="comment_pager_bottom">
+    
+</div>
+</div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html#top">返回顶部</a></div>
+    <div id="comment_form_container" style="visibility: visible;"><script type="text/javascript" src="./JAVA反射概念及使用详解(超详细) - yZzc_XQ - 博客园_files/mention.min.js.下载"></script>
+<div id="commentform_title">发表评论</div>
+<span id="tip_comment" style="color:Red"></span>
+<div class="commentbox_main comment_textarea">
+    <div class="commentbox_title">
+        <div class="commentbox_title_left">
+            <span id="btn_edit_comment" class="commentbox_tab active" title="编辑评论">编辑</span>
+            <span id="btn_preview_comment" class="commentbox_tab" title="Markdown 预览">预览</span>
+        </div>
+        <div class="commentbox_title_right">
+            <span id="ubb_bold" class="comment_icon" alt="粗体" title="添加粗体(Ctrl + B)">
+                <svg class="comment_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g fill-rule="evenodd">
+                        <path d="m13.221 19c1.4414 0 2.5793-0.27451 3.3759-0.82353 0.92931-0.66667 1.4034-1.7059 1.4034-3.1176 0-0.94118-0.22759-1.7059-0.66379-2.2549-0.45517-0.56863-1.119-0.94118-2.0103-1.1176 0.68276-0.27451 1.1948-0.64706 1.5552-1.1569 0.36034-0.54902 0.55-1.2157 0.55-2 0-1.0588-0.36034-1.902-1.0621-2.5294-0.75862-0.66667-1.8207-1-3.1672-1h-6.2017v14h6.2207zm-0.82196-8h-3.3987v-4h3.4367c0.91139 0 1.557 0.15686 1.9747 0.47059 0.37975 0.29412 0.58861 0.78431 0.58861 1.451 0 0.72549-0.20886 1.2549-0.58861 1.5882-0.39873 0.31373-1.0633 0.4902-2.0127 0.4902zm0.52612 6h-3.9249v-4h3.9855c1.052 0 1.8208 0.16216 2.3064 0.48649 0.46532 0.32432 0.70809 0.84685 0.70809 1.5856 0 0.72072-0.3237 1.2252-0.9711 1.5495-0.50578 0.25225-1.2139 0.37838-2.104 0.37838z" fill-rule="nonzero" stroke-width=".35"></path>
+                    </g>
+                </svg>
+            </span>
+            <span id="ubb_url" class="comment_icon" title="添加链接(Ctrl + K)" alt="链接">
+                <svg class="comment_svg comment_svg_stroke" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g fill-rule="evenodd">
+                        <g transform="translate(4 4)" fill-rule="nonzero" stroke-width=".4">
+                            <path d="m6.304 9.696c-0.288-0.288-0.512-0.608-0.704-0.992-0.16-0.32-0.032-0.704 0.288-0.864 0.32-0.16 0.704-0.032 0.864 0.288 0.128 0.224 0.256 0.448 0.448 0.64 0.928 0.928 2.432 0.928 3.36 0l3.36-3.328c0.928-0.928 0.928-2.432 0-3.36s-2.432-0.928-3.36 0l-2.272 2.272c-0.256 0.256-0.64 0.256-0.896 0-0.256-0.256-0.256-0.64 0-0.896l2.272-2.272c1.44-1.44 3.744-1.44 5.184 0 1.44 1.44 1.44 3.744 0 5.184l-3.36 3.296c-0.704 0.704-1.632 1.088-2.592 1.088-0.928 0-1.856-0.352-2.592-1.056z"></path>
+                            <path d="m3.776 15.808c-0.992 0-1.888-0.384-2.592-1.056-1.44-1.44-1.44-3.744 0-5.184l3.328-3.328c1.44-1.44 3.744-1.44 5.184 0 0.288 0.288 0.544 0.64 0.736 1.024 0.16 0.32 0 0.704-0.32 0.864-0.32 0.16-0.704 0-0.864-0.32-0.128-0.256-0.288-0.48-0.48-0.672-0.928-0.928-2.432-0.928-3.36 0l-3.296 3.328c-0.928 0.928-0.928 2.432 0 3.36 0.448 0.448 1.056 0.704 1.664 0.704 0.608 0 1.248-0.256 1.664-0.704l2.112-2.112c0.256-0.256 0.64-0.256 0.896 0s0.256 0.64 0 0.896l-2.112 2.112c-0.672 0.704-1.568 1.088-2.56 1.088z"></path>
+                        </g>
+                    </g>
+                </svg>
+            </span>
+            <span id="ubb_code" class="comment_icon" title="添加代码(Ctrl + `)" alt="代码">
+                <svg class="comment_svg comment_svg_stroke" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g fill-rule="evenodd">
+                        <g transform="translate(16 6)" stroke-linecap="round" stroke-width="2">
+                            <line x1=".5" x2="4.5" y1=".7" y2="6.3"></line>
+                            <line transform="translate(2.5 9.1) scale(1 -1) translate(-2.5 -9.1)" x1=".5" x2="4.5" y1="6.3" y2="11.9"></line>
+                        </g>
+                        <g transform="translate(3 6.1)" stroke-linecap="round" stroke-width="2">
+                            <line transform="translate(2.5 3.5) scale(-1 1) translate(-2.5 -3.5)" x1=".5" x2="4.5" y1=".7" y2="6.3"></line>
+                            <line transform="translate(2.5 9.1) scale(-1) translate(-2.5 -9.1)" x1=".5" x2="4.5" y1="6.3" y2="11.9"></line>
+                        </g>
+                        <path transform="translate(12 12.5) scale(1 -1) translate(-12 -12.5)" d="m10.778 7.1249c0.50008-0.11366 0.9978 0.16911 1.1643 0.64128l0.032406 0.11223 2 8.8c0.1224 0.53855-0.21496 1.0744-0.75351 1.1968-0.50008 0.11366-0.9978-0.16911-1.1643-0.64128l-0.032406-0.11223-2-8.8c-0.1224-0.53855 0.21496-1.0744 0.75351-1.1968z" fill-rule="nonzero" stroke-width=".25"></path>
+                    </g>
+                </svg>
+            </span>
+            <span id="ubb_quote" class="comment_icon" title="添加引用(Ctrl + Q)" alt="引用">
+                <svg class="comment_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g fill-rule="evenodd">
+                        <g transform="translate(5 4)" fill-rule="nonzero" stroke-width=".25">
+                            <path d="m5.0013 15v-5.2702h-2.8008c-0.13413-3.3762 1.2004-6.2143 4.0009-8.5135l-1.2-1.2163c-3.335 2.2996-5.0013 5.8119-5.0013 10.54v4.4595h5.0013-1.285e-5zm8.7987 0v-5.2702h-2.8008c-0.13453-3.3762 1.2-6.2143 4.0009-8.5135l-1.2-1.2163c-3.335 2.2996-5.0013 5.8119-5.0013 10.54v4.4595h5.0013-1.28e-5z"></path>
+                        </g>
+                    </g>
+                </svg>
+            </span>
+            <span id="ubb_img" class="comment_icon" alt="图片" title="上传图片(Ctrl + I)">
+                <svg class="comment_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g fill-rule="evenodd">
+                        <g transform="translate(3 3.8)" fill-rule="nonzero">
+                            <path d="m14.1 0.58235h-11.2c-1.32 0-2.4 1.0482-2.4 2.3294v10.871c0 1.2812 1.08 2.3294 2.4 2.3294h11.2c1.32 0 2.4-1.0482 2.4-2.3294v-10.871c0-1.2812-1.08-2.3294-2.4-2.3294zm0.7 13.569-3.63-3.4165 1.33-1.2909c0.21-0.20382 0.59-0.20382 0.8 0l1.6 1.5529v2.7856c0 0.13588-0.04 0.26206-0.1 0.36882zm-11.9-12.016h11.2c0.44 0 0.8 0.34941 0.8 0.77647v5.8915l-0.47-0.45618c-0.84-0.825-2.22-0.825-3.07 0l-1.35 1.3103-2.39-2.2421c-0.85-0.825-2.22-0.825-3.05-0.019412l-2.48 2.2615v-6.7456c0.01-0.42706 0.37-0.77647 0.81-0.77647zm-0.8 11.647v-1.9897l3.6-3.2806c0.21-0.20382 0.58-0.21353 0.81 0.0097059l6.43 6.0371h-10.04c-0.44 0-0.8-0.33971-0.8-0.77647z"></path>
+                            <ellipse cx="10.5" cy="6.4059" rx="1" ry="1"></ellipse>
+                        </g>
+                    </g>
+                </svg>
+            </span>
+        </div>
+    </div>
+    <div style="display:none">
+        <span id="comment_edit_id"></span>
+        <span id="span_parentcomment_id"></span>
+        <span id="span_parent_id"></span>
+        <span id="span_comment_replyto"></span>
+        <span id="span_comment_posted"></span>
+        <span id="span_current_user_id">91fc3111-2748-43f4-b8f5-08da3b3354ad</span>
+    </div>
+    <textarea id="tbCommentBody" placeholder="支持 Markdown"></textarea>
+    <div id="tbCommentBodyPreview" class="feedbackCon" style="display: none">
+        <div id="tbCommentBodyPreviewBody" class="blog_comment_body comment_preview cnblogs-markdown"></div>
+    </div>
+    <div class="commentbox_footer">
+        <span>&nbsp;</span>
+        <span href="javascript:void(0)" id="ubb_auto_completion" class="comment_option">
+            <svg style="display: none" id="comment_auto_completion_on" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M406.724 908.504c-89.02 0-157.885-32.319-206.594-96.957-49.549-64.639-73.903-155.795-73.903-274.299 0-116.017 24.354-206.345 73.903-270.155 48.71-63.81 117.574-95.3 206.594-95.3h19.316l-7.559 72.925h-3.359c-65.505 0-115.054 25.69-150.326 77.069-35.272 50.55-52.908 122.647-52.908 215.461 0 94.472 17.636 168.226 52.908 220.434 35.272 51.379 84.82 77.897 150.326 77.897h3.36l7.558 72.925h-19.316zm266.548 0c89.02 0 157.885-32.319 206.594-96.957 49.55-64.639 73.904-155.795 73.904-274.299 0-116.017-24.355-206.345-73.904-270.155-48.709-63.81-117.573-95.3-206.594-95.3h-19.315l7.558 72.925h3.36c65.505 0 115.054 25.69 150.326 77.069 35.272 50.55 52.908 122.647 52.908 215.461 0 94.472-17.636 168.226-52.908 220.434-35.272 51.379-84.821 77.897-150.327 77.897h-3.359l-7.558 72.925h19.315zm-94.068-65.897c0 31.514.854 54.433 1.708 68.758 1.709 14.325 3.417 25.784 6.835 34.38 2.563 8.594 6.834 14.324 12.814 20.054 5.126 5.73 14.523 11.46 27.337 17.189v34.38H451.914v-34.38c17.086-7.162 29.046-15.757 35.026-24.352 5.126-10.027 9.398-22.92 11.106-38.676 1.709-17.19 2.563-42.974 2.563-77.353V238.109c0-32.947-.854-55.866-1.709-71.623-1.708-14.325-4.271-25.784-6.834-32.947-3.417-8.595-7.689-15.757-12.814-20.054-5.126-5.73-14.523-10.027-27.338-17.19V61.916h175.984v34.38c-11.96 5.73-21.357 11.459-26.483 15.756-5.125 5.73-9.397 11.46-12.814 20.055-3.417 7.162-5.98 18.622-6.834 34.379-1.709 15.757-2.563 38.676-2.563 71.623v604.498z" fill-rule="nonzero"></path></svg>
+            <svg id="comment_auto_completion_off" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M242.96 223.172l59.627 58.009c-14.277 10.773-26.874 24.032-37.791 40.606-35.272 50.55-52.908 122.647-52.908 215.461 0 94.472 17.636 168.226 52.908 220.434 35.272 51.379 84.82 77.897 150.326 77.897h3.36l7.558 72.925h-19.316c-89.02 0-157.885-32.319-206.594-96.957-49.549-64.639-73.903-155.795-73.903-274.299 0-116.017 24.354-206.345 73.903-270.155 12.597-16.574 26.874-31.49 42.83-43.921zm36.952-23.204c36.112-19.06 78.943-28.175 126.812-28.175h19.316l-7.559 72.925h-3.359c-27.714 0-52.908 4.144-74.743 14.088l-60.467-58.838zM805.123 770.94l60.466 58.01c-47.869 53.036-111.695 79.554-192.317 79.554h-19.315l7.558-72.925h3.36c59.626 0 105.816-21.546 140.248-64.638zm23.515-37.29c26.034-49.723 39.47-115.19 39.47-196.402 0-92.814-17.635-164.91-52.907-215.461-35.272-51.38-84.821-77.069-150.327-77.069h-3.359l-7.558-72.925h19.315c89.02 0 157.885 31.49 206.594 95.3 49.55 63.81 73.904 154.138 73.904 270.155 0 108.56-20.996 194.744-62.146 257.725l-62.986-61.324zM500.609 474.465l78.595 75.92v292.222c0 31.514.854 54.433 1.708 68.758 1.709 14.325 3.417 25.784 6.835 34.38 2.563 8.594 6.834 14.324 12.814 20.054 5.126 5.73 14.523 11.46 27.337 17.189v34.38H451.914v-34.38c17.086-7.162 29.046-15.757 35.026-24.352 5.126-10.027 9.398-22.92 11.106-38.676 1.709-17.19 2.563-42.974 2.563-77.353V474.465zm0-60.164V238.11c0-32.947-.854-55.866-1.709-71.623-1.708-14.325-4.271-25.784-6.834-32.947-3.417-8.595-7.689-15.757-12.814-20.054-5.126-5.73-14.523-10.027-27.338-17.19v-34.38h175.984v34.38c-11.96 5.73-21.357 11.459-26.483 15.756-5.125 5.73-9.397 11.46-12.814 20.055-3.417 7.162-5.98 18.622-6.834 34.379-1.709 15.757-2.563 38.676-2.563 71.623v253.545l-78.595-77.353z"></path><path d="M153.103 132.024l805.45 783.706-44.277 45.505-805.45-783.706z"></path></svg>
+            <span class="inline_middle">自动补全</span>
+        </span>
+    </div>
+</div>
+<p id="commentbox_opt">
+    <input id="btn_comment_submit" type="button" class="comment_btn" title="提交评论(Ctrl + Enter)" value="提交评论">
+    <span id="span_comment_canceledit" style="display:none"><a href="javascript:void(0);" onclick="return CancelCommentEdit()">不改了</a></span>
+    <a href="javascript:void(0);" onclick="return account.logout();">退出</a>
+            <a id="commentbox_opt_sub" href="javascript:void(0);" title="订阅后有新评论时会邮件通知您" onclick="commentManager.Subscribe()">订阅评论</a>
+            <a href="https://www.cnblogs.com/J1syan/" target="_blank">我的博客</a>
+</p>
+<div id="tip_comment2" style="color:Red"></div>
+<p>[Ctrl+Enter快捷键提交]</p>
+<script>var commentEditor = initCommentEditor("tbCommentBody");</script>
+
+</div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"><a href="https://curl.qcloud.com/k19RDMHo" target="_blank" onclick="gtag(&#39;event&#39;, &#39;click&#39;, {&#39;event_category&#39;: &#39;ad&#39;, &#39;event_label&#39;: &#39;T2-腾讯云&#39;})">【推荐】腾讯云多款云产品1折起，买云服务器送免费机器</a><br><a href="https://click.ctyun.cn/?track=source_bokeyuan-medium_cps-content_se430382" target="_blank" onclick="gtag(&#39;event&#39;, &#39;click&#39;, {&#39;event_category&#39;: &#39;ad&#39;, &#39;event_label&#39;: &#39;T2-天翼云&#39;})">【推荐】天翼云新客特惠，云主机1核2G低至33.43元/年</a><br></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card" style="display: none;">
+            <div id="div-gpt-ad-1592365906576-0" style="width: 300px; height: 250px;"></div>
+    </div>
+    <div id="under_post_card1"><div class="under-post-card">
+<b>编辑推荐：</b>
+<br>
+
+· <a href="https://www.cnblogs.com/sheng-jie/p/MassTransit-NET-Distributed-Application-Framework.html" target="_blank">MassTransit | .NET 分布式应用框架</a>
+    <br>
+· <a href="https://www.cnblogs.com/god23bin/p/check-duplication-in-java.html" target="_blank">查重原来是这样实现的啊！</a>
+    <br>
+· <a href="https://www.cnblogs.com/Finley/p/16812713.html" target="_blank">从小白到架构师(2): 走向微服务</a>
+    <br>
+· <a href="https://www.cnblogs.com/coco1s/p/16808899.html" target="_blank">超强的苹果官网滚动文字特效实现</a>
+    <br>
+· <a href="https://www.cnblogs.com/lindexi/p/16804899.html" target="_blank">dotnet 用 SourceGenerator 源代码生成技术实现中文编程语言</a>
+    <br>
+</div></div>
+    <div id="under_post_card2"><div class="itnews under-post-card">
+    <b>最新新闻</b>：
+    <br>
+ ·          <a href="https://news.cnblogs.com/n/730310/" target="_blank">NASA 为阿尔忒弥斯登月任务再购 3 个猎户座飞船，标价19.9亿美元</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/730309/" target="_blank">富士康大动作：杀入私募亲自做GP，曾拿百亿元搞投资</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/730308/" target="_blank">虚拟主播和游戏引擎，成了当代天气预报的财富密码</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/730307/" target="_blank">房多多收到纳斯达克通知：不符合上市最低市值要求</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/730306/" target="_blank">圆心科技再度冲刺港股：8个月亏5.3亿 腾讯红杉启明是股东</a>
+        <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+    </div>
+</div>
+            </div>
+        </div>
+
+        <div id="sideBar">
+            <div id="sideBarMain">
+                <div id="sidebar_news" class="newsItem">
+<h3 class="catListTitle">公告</h3>
+
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/yZzcXQ/">
+            yZzc_XQ
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/yZzcXQ/" title="入园时间：2020-03-14">
+            2年7个月
+        </a>
+        <br>
+        粉丝：
+        <a class="follower-count" href="https://home.cnblogs.com/u/yZzcXQ/followers/">
+            1
+        </a>
+        <br>
+        关注：
+        <a class="folowing-count" href="https://home.cnblogs.com/u/yZzcXQ/followees/">
+            0
+        </a>
+        <div id="p_b_follow" class="follow-tip">
+<a href="javascript:void(0)" onclick="follow(&#39;f6a797ee-120e-46a6-ff9b-08d7c7fac060&#39;)">+加关注</a></div>
+        <script>getFollowStatus('f6a797ee-120e-46a6-ff9b-08d7c7fac060');</script>
+    </div>
+</div></div>
+<div id="sidebar_c3"></div>
+                <div id="calendar"><div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2022/09/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2022年10月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2022/11/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    <tr>
+        <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+        <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+        <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+        <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+        <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+        <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+        <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+    </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">25</td>
+                            <td class="CalOtherMonthDay" align="center">26</td>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                    <td class="CalWeekendDay" align="center">
+                        1
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            2
+                        </td>
+                            <td class="" align="center">
+                                3
+                            </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                7
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            8
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            15
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                20
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            22
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                            <td class="CalTodayDay" align="center">
+                                24
+                            </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            29
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                            <td class="" align="center">
+                                31
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            5
+                        </td>
+                </tr>
+    </tbody>
+</table></div></div>                
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="leftcontentcontainer">
+                    <!-- begin:SingleColumn -->
+                    <div id="blog-sidecolumn"><!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+    <li><a href="https://www.cnblogs.com/yZzcXQ/p/" title="我的博客的随笔列表">我的随笔</a></li>
+<li><a href="https://www.cnblogs.com/yZzcXQ/MyComments.html" title="我的发表过的评论列表">我的评论</a></li>
+<li><a href="https://www.cnblogs.com/yZzcXQ/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li>
+<li><a href="https://www.cnblogs.com/yZzcXQ/comments" title="我的博客的评论列表">最新评论</a></li>
+<li><a href="https://www.cnblogs.com/yZzcXQ/tag/" title="我的博客的标签列表">我的标签</a></li>
+
+</ul>
+</div>
+
+<!-- 最新随笔 -->
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+    <h3 class="catListTitle">我的标签</h3>
+    <ul>
+                <li>
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/Java/">Java<span class="tag-count">(8)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/JavaSE/">JavaSE<span class="tag-count">(5)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/%E5%8F%8D%E5%B0%84/">反射<span class="tag-count">(2)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象<span class="tag-count">(2)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/yZzcXQ/tag/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程<span class="tag-count">(1)</span></a>
+        </li>
+    
+
+    </ul>
+</div>
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+
+    <div class="catListPostCategory">
+        <h3 class="catListTitle">
+            
+    <a class="sidebar-card-title-a" href="https://www.cnblogs.com/yZzcXQ/categories">随笔分类</a>
+
+
+
+        </h3>
+        <ul>
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/yZzcXQ/category/1674129.html" class="category-item-link" rel="" target="">JavaSE(7)</a>
+
+                    
+                </li>
+                                        
+        </ul>
+    </div>    <div class="catListPostArchive">
+        <h3 class="catListTitle">
+            
+随笔档案
+
+
+        </h3>
+        <ul>
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/yZzcXQ/archive/2020/03.html" class="category-item-link" rel="" target="">2020年3月(10)</a>
+
+                    
+                </li>
+                                        
+        </ul>
+    </div></div>
+
+<!-- 最新评论 -->
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">
+        <a href="https://www.cnblogs.com/yZzcXQ/most-viewed" class="sidebar-card-title-a">
+    阅读排行榜
+</a>
+
+    </h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html">
+                            1. JAVA反射概念及使用详解(超详细)(5837)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/Lambda-FunctionInterface.html">
+                            2. Java  Lambda表达式与函数式接口(1452)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-anno.html">
+                            3. Java注解 看这一篇就够了(649)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/Stream-map-flatMap.html">
+                            4. Java流中的map算子和flatMap算子的区别(613)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-thread.html">
+                            5. Java多线程的wait()，notify()，notifyAll()、sleep()和yield()方法使用详解(325)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div></div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">
+        <a href="https://www.cnblogs.com/yZzcXQ/most-commented" class="sidebar-card-title-a">评论排行榜</a>
+
+    </h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html">
+                            1. JAVA反射概念及使用详解(超详细)(1)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div></div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">
+            <a href="https://www.cnblogs.com/yZzcXQ/most-liked" class="sidebar-card-title-a">推荐排行榜</a>
+
+        </h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html">
+                                1. JAVA反射概念及使用详解(超详细)(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div></div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle"><a href="https://www.cnblogs.com/yZzcXQ/comments" class="sidebar-card-title-a">最新评论</a></h3>    
+    <div class="RecentCommentBlock">
+        <ul>
+                <li class="recent_comment_title"><a href="https://www.cnblogs.com/yZzcXQ/p/JavaSE-reflect.html">1. Re:JAVA反射概念及使用详解(超详细)</a></li>
+                <li class="recent_comment_body"><p>所以反射的定义是什么，反射是什么？ 反射是框架的灵魂，这么回答是不是太草率了</p>
+</li>
+                <li class="recent_comment_author">--Joker-云玖</li>
+        </ul>
+    </div>
+</div></div>
+
+
+</div>
+                    <script>loadBlogSideColumn();</script>
+                    <!-- end:  SingleColumn -->
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div id="footer">
+        <!--done-->
+Copyright © 2022 yZzc_XQ
+<br><span id="poweredby">Powered by .NET 6 on Kubernetes</span>
+
+    </div>
+</div>
+
+
+
+
+<input type="hidden" id="antiforgery_token" value="CfDJ8NfDHj8mnYFAmPyhfXwJojdnTV7gKvoLHJHBllrH1x7Dy4hYeG93VaNrS5Si1IkfUF2pMxd5ofXzL-5IyrVek2qxvL9LW6lKTkcpwnTp_lc8Z01L3AFuGHCJH1CEH70IWLmLR7FnznQ2oPaqMf6KoH1IGGRAunei_btFhGrkhZ5BwCDsBiEoKVGeHrmucFA6OA">
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-476124-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer="" src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+
+</body></html>
